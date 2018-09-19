@@ -11,7 +11,7 @@ class AppDynamicsJob(unittest.TestCase):
     def setUp(self):
         # AppDynamics will automatically override this web driver
         # as documented in https://docs.appdynamics.com/display/PRO44/Write+Your+First+Script
-        self.driver = webdriver.PhantomJS()
+        self.driver = webdriver.Firefox()
         self.driver.implicitly_wait(30)
         self.base_url = "https://www.katalon.com/"
         self.verificationErrors = []
@@ -24,11 +24,11 @@ class AppDynamicsJob(unittest.TestCase):
         driver.find_element_by_id("ctl00_ContentPlaceHolder1_btnSwitch").click()
         driver.find_element_by_id("ctl00_ContentPlaceHolder1_lstMax_Input").click()
         driver.find_element_by_xpath("(.//*[normalize-space(text()) and normalize-space(.)='Sign In'])[1]/preceding::li[1]").click()
-        driver.find_element_by_id("ctl00_ContentPlaceHolder1_lstMax_Input").clear()
+        #driver.find_element_by_id("ctl00_ContentPlaceHolder1_lstMax_Input").clear()
         driver.find_element_by_id("ctl00_ContentPlaceHolder1_lstMax_Input").send_keys("All")
         driver.find_element_by_id("ctl00_ContentPlaceHolder1_lstYearsAdvanced_Input").click()
         driver.find_element_by_xpath("(.//*[normalize-space(text()) and normalize-space(.)='Last Year'])[1]/preceding::li[20]").click()
-        driver.find_element_by_id("ctl00_ContentPlaceHolder1_lstYearsAdvanced_Input").clear()
+        #driver.find_element_by_id("ctl00_ContentPlaceHolder1_lstYearsAdvanced_Input").clear()
         driver.find_element_by_id("ctl00_ContentPlaceHolder1_lstYearsAdvanced_Input").send_keys("All Years")
         driver.find_element_by_id("visibleSearchButton").click()
         driver.find_element_by_id("ctl00_ButtonRSS").click()
