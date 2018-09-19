@@ -7,23 +7,59 @@ from selenium.common.exceptions import NoAlertPresentException
 import unittest, time, re
 
 from scraper import Scraper
-#from ..model import Calendar as CalendarModel
+from model.calendar import Calendar as CalendarModel
 
 class Calendar(Scraper):
-    def __init__(self, wait=30, driver=None):
-        super().__init__(wait, driver)
+    def __init__(self, base_url='https://oakland.legistar.com/Calendar.aspx', wait=30, driver=None):
+        super().__init__(base_url, wait, driver)    
 
     def run(self):
-        url = 'https://oakland.legistar.com/Calendar.aspx'
-        self.get(url)
+        self.get(self.base_url)
 
-        rows = self.driver.find_elements(By.XPATH, '//tbody/tr')
+        calendar_list = []
+
+        rows = self.driver.find_elements(By.XPATH, 
+                    "//div[@id='ctl00_ContentPlaceHolder1_divGrid']//tbody/tr")
 
         for i, row in enumerate(rows):
             print(i, str(row))
             cols = row.find_elements(By.XPATH, 'td')
-            for j, col in enumerate(cols):
-                print(j, col.text)
+
+            name = cols[0].text
+            meeting_date = cols[1].text
+
+            calendar_link = self.elt_get_href(cols[2])
+
+            meeting_time = cols[3].text
+
+            meeting_location = cols[4].text
+            meeting_details = self.elt_get_href(cols[5])
+            agenda = self.elt_get_href(cols[6])
+            minutes = self.elt_get_href(cols[7])
+            video = self.elt_get_href(cols[8])
+            eComment = self.elt_get_href(cols[9])
+
+            print("name: ", name)
+            print("meeting_date: ", meeting_date)
+            print("calendar_link: ", calendar_link)
+            print("meeting_time: ", meeting_time)
+            print("meeting_location: ", meeting_location) 
+            print("meeting_details: ", meeting_details)
+            print("agenda: ", agenda)
+            print("minutes: ", minutes)
+            print("video: ", video)
+            print("eComment: ", eComment)
+
+            calendar = CalendarModel(name, meeting_date, calendar_link, 
+                                        meeting_time, meeting_location, 
+                                        meeting_details, agenda, 
+                                        minutes, video, eComment)
+
+            calendar_list.append(calendar)
+
+        cl_json = CalendarModel.to_map_list_json(calendar_list)
+
+        print(cl_json)
 
 def main():
     cal = Calendar()
