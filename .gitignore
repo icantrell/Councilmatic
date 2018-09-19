@@ -2,3 +2,5 @@
 temp
 *.log
 geckodriver*
+__pycache__
+*.pyc
