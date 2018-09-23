@@ -8,6 +8,11 @@
   1. conda env create -f environment.yml
 3. Download geckodriver and add to path
   1. https://github.com/mozilla/geckodriver/releases
+  
+# start up conda env
+```
+source activate new_councilmatic
+```
 
 # To run:
 ```
