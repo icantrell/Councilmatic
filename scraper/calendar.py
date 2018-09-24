@@ -18,13 +18,16 @@ class Calendar(Scraper):
 
         calendar_list = []
 
+        #find div that holds table with events info and extract the rows of the table.
         rows = self.driver.find_elements(By.XPATH, 
                     "//div[@id='ctl00_ContentPlaceHolder1_divGrid']//tbody/tr")
 
         for i, row in enumerate(rows):
             print(i, str(row))
+            #get each column of the row
             cols = row.find_elements(By.XPATH, 'td')
 
+            #extract data.
             name = cols[0].text
             meeting_date = cols[1].text
 
@@ -49,14 +52,15 @@ class Calendar(Scraper):
             print("minutes: ", minutes)
             print("video: ", video)
             print("eComment: ", eComment)
-
+            
+            #create calendar event data storage object.
             calendar = CalendarModel(name, meeting_date, calendar_link, 
                                         meeting_time, meeting_location, 
                                         meeting_details, agenda, 
                                         minutes, video, eComment)
-
+            #add to event list
             calendar_list.append(calendar)
-
+        #turn to json
         cl_json = CalendarModel.to_map_list_json(calendar_list)
 
         print(cl_json)

@@ -9,7 +9,7 @@ import unittest, time, re
 class Scraper(object):
     def __init__(self, base_url, wait=30, driver=None):
         self.base_url = base_url
-
+        self.wait_time = wait
         if driver is None:
             # default to firefox
             self.driver = webdriver.Firefox()
@@ -33,5 +33,8 @@ class Scraper(object):
             self.driver.quit()
         except:
             pass
+
+    def wait(self):
+        self.driver.implicitly_wait(self.wait_time)
 
 
