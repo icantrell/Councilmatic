@@ -20,25 +20,26 @@ class CityCouncil(Scraper):
         self.get(self.base_url)
         #go to city council page
         self.driver.find_element_by_xpath("(.//*[normalize-space(text()) and normalize-space(.)='Calendar'])[1]/following::span[3]").click()
+
         #click on "people" button
         self.driver.find_element_by_xpath("(.//*[normalize-space(text()) and normalize-space(.)='Calendar (0)'])[1]/following::span[3]").click()
         #wait for load
         self.wait()
+
         city_council_list = []
         
         #find div that holds table with council members info and extract the rows of the table.
         rows = self.driver.find_elements(By.XPATH, 
-                    "//div[@id='ctl00_ContentPlaceHolder1_pagePeople']//tbody/tr")
-
+                    "//div[@id='ctl00_ContentPlaceHolder1_gridPeople']/table/tbody/tr")
 
         for i, row in enumerate(rows):
             print(i, str(row))
             #get each column of the row.
-            cols = row.find_elements(By.XPATH, 'td')
+            cols = row.find_elements(By.TAG_NAME, 'td')
 
             #extract data
-            print(cols[0])
             name = cols[0].text
+  
             title = cols[1].text
             
             start_date = cols[2].text
@@ -63,8 +64,9 @@ class CityCouncil(Scraper):
                                         website, appointed_by)
 
             city_council_list.append(city_council)
+
         #turn to json
-        cl_json = CalendarModel.to_map_list_json(calendar_list)
+        cl_json = CityCouncilModel.to_map_list_json(city_council_list)
 
         print(cl_json)
 
