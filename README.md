@@ -18,3 +18,14 @@ source activate new_councilmatic
 ```
 PYTHONPATH=. python scraper/calendar.py 
 ```
+
+# Milestones:
+1. to have a web scraping library.
+  *scraping from https://oakland.legistar.com/Calendar.aspx.
+  *need to scrape data from the city council table, city council events(aka city meetings, the calendar page) table and the legislation page.
+  *scrapers inherit from the scraper class and use selenium to naviagate to the pages, which might require javascript and access web content inside tables on the page.
+  *store in models(that are decoupled from DB).
+  
+ next milestones...
+ might want to have some kind of user interface.(note: almost done with the first milestone)
+
