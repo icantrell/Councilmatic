@@ -8,6 +8,7 @@
   * conda env create -f environment.yml
 3. Download geckodriver and add to path
   * https://github.com/mozilla/geckodriver/releases
+  <br>
 note: We used Katalon IDE brower plugin to generate some of python selenium statements the normal selenium IDE no longer supports Python code exports.
   
 # start up conda env
