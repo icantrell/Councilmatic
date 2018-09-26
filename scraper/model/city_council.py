@@ -1,4 +1,4 @@
-from model.json_model import JsonModel
+from .json_model import JsonModel
 
 class CityCouncil(JsonModel):
   def __init__(self, name, title, start_date, 

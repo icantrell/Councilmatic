@@ -6,8 +6,8 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 import unittest, time, re
 
-from scraper import Scraper
-from model.city_council import CityCouncil as CityCouncilModel
+from .scraper import Scraper
+from ..model.city_council import CityCouncil as CityCouncilModel
 
 class CityCouncil(Scraper):
     def __init__(self, base_url='https://oakland.legistar.com/Calendar.aspx', wait=30, driver=None):

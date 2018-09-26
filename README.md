@@ -14,6 +14,12 @@
 source activate new_councilmatic
 ```
 
+# install conda env into jupyter notebook
+```
+source activate new_councilmatic
+python -m ipykernel install --user --name new_councilmatic --display-name "new councilmatic"
+```
+
 # To run:
 ```
 PYTHONPATH=. python scraper/calendar.py 

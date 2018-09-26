@@ -6,16 +6,47 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 import unittest, time, re
 
-from scraper import Scraper
-from model.calendar import Calendar as CalendarModel
+from .scraper import Scraper
+from ..model.calendar import Calendar as CalendarModel
 
 class Calendar(Scraper):
     def __init__(self, base_url='https://oakland.legistar.com/Calendar.aspx', wait=30, driver=None):
         super().__init__(base_url, wait, driver)    
 
-    def run(self):
+    def get_search_input_elt(self, highlight=False, sleep_time=2):
+        search_input_elt = self.driver.find_element(By.XPATH, "//input[@name='ctl00$ContentPlaceHolder1$txtSearch']")
+        if highlight:
+            self.highlight(search_input_elt, sleep_time=sleep_time)
+
+        return search_input_elt
+
+    def get_date_sel_elt(self, highlight=False, sleep_time=2):
+        date_sel_elt = self.driver.find_element_by_id('ctl00_ContentPlaceHolder1_lstYears_Input')
+        if highlight:
+            self.highlight(date_sel_elt, sleep_time=sleep_time)
+
+        return date_sel_elt
+
+    def get_notes_ckbx(self):
+        return self.driver.find_element_by_id('ctl00_ContentPlaceHolder1_chkOptions_0')
+
+    def get_closed_caption_ckbx(self):
+        return self.driver.find_element_by_id('ctl00_ContentPlaceHolder1_chkOptions_1')
+
+    def query(self, search_str=None, date_sel=None, dept=None, notes=False, closed_caption=False):
         self.get(self.base_url)
 
+        calendar_list = []
+
+        search_input_elt = self.get_search_input_elt()
+        if search_str is not None and search_str != "":
+            search_input_elt.send_keys(search_str)
+            search_input_elt.submit()
+            time.sleep(10)
+        
+        return self.scrape_page()
+
+    def scrape_page(self):
         calendar_list = []
 
         #find div that holds table with events info and extract the rows of the table.
@@ -23,7 +54,7 @@ class Calendar(Scraper):
                     "//div[@id='ctl00_ContentPlaceHolder1_divGrid']//tbody/tr")
 
         for i, row in enumerate(rows):
-            print(i, str(row))
+            #print(i, str(row))
             #get each column of the row
             cols = row.find_elements(By.XPATH, 'td')
 
@@ -42,6 +73,7 @@ class Calendar(Scraper):
             video = self.elt_get_href(cols[8])
             eComment = self.elt_get_href(cols[9])
 
+            """
             print("name: ", name)
             print("meeting_date: ", meeting_date)
             print("calendar_link: ", calendar_link)
@@ -52,6 +84,7 @@ class Calendar(Scraper):
             print("minutes: ", minutes)
             print("video: ", video)
             print("eComment: ", eComment)
+            """
             
             #create calendar event data storage object.
             calendar = CalendarModel(name, meeting_date, calendar_link, 
@@ -60,7 +93,12 @@ class Calendar(Scraper):
                                         minutes, video, eComment)
             #add to event list
             calendar_list.append(calendar)
-        #turn to json
+
+        return calendar_list        
+
+    def run(self):
+        calendar_list = self.query(search_str="lead")
+
         cl_json = CalendarModel.to_map_list_json(calendar_list)
 
         print(cl_json)
