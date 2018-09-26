@@ -4,6 +4,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
+from selenium.webdriver.support.ui import Select
 import unittest, time, re
 
 from .scraper import Scraper
@@ -33,16 +34,31 @@ class Calendar(Scraper):
     def get_closed_caption_ckbx(self):
         return self.driver.find_element_by_id('ctl00_ContentPlaceHolder1_chkOptions_1')
 
-    def query(self, search_str=None, date_sel=None, dept=None, notes=False, closed_caption=False):
+    def get_pagination_links(self, highlight=False, sleep_time=2):
+        link_elts = self.driver.find_elements(By.XPATH,
+            "//tr[@class='rgPager']//td[@class='NumericPages']/div[@class='rgNumPart']/a")
+
+        if highlight:
+            for link_elts in link_elts:
+                self.highlight(link_elts, sleep_time=sleep_time)
+
+        return link_elts
+
+    def query(self, search_str=None, date_sel=None, 
+                dept=None, notes=False, closed_caption=False,
+                sleep_time=10):
         self.get(self.base_url)
 
-        calendar_list = []
-
-        search_input_elt = self.get_search_input_elt()
         if search_str is not None and search_str != "":
+            search_input_elt = self.get_search_input_elt()
             search_input_elt.send_keys(search_str)
             search_input_elt.submit()
-            time.sleep(10)
+            time.sleep(sleep_time)
+
+        if date_sel is not None and date_sel != "":
+            date_sel_elt = Select(self.get_date_sel_elt())
+            date_sel_elt.select_by_visible_text(date_sel)
+            time.sleep(sleep_time)
         
         return self.scrape_page()
 
