@@ -16,6 +16,12 @@ note: We used Katalon IDE brower plugin to easy generate some of python selenium
 source activate new_councilmatic
 ```
 
+# update conda env
+```
+source activate new_councilmatic
+conda env update -f=environment.yml
+```
+
 # install conda env into jupyter notebook
 ```
 source activate new_councilmatic
@@ -26,6 +32,12 @@ python -m ipykernel install --user --name new_councilmatic --display-name "new c
 ```
 PYTHONPATH=. python scraper/calendar.py 
 ```
+(*I kind of broke this at the moment - PC)
+
+# To run in jupyter notebook
+```
+jupyter notebook calendar.ipynb
+``
 
 # Milestones:
 1. to have a web scraping library.
