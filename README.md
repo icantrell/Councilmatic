@@ -30,9 +30,8 @@ python -m ipykernel install --user --name new_councilmatic --display-name "new c
 
 # To run:
 ```
-PYTHONPATH=. python scraper/calendar.py 
+python run_calendar.py 
 ```
-(*I kind of broke this at the moment - PC)
 
 # To run in jupyter notebook
 ```
