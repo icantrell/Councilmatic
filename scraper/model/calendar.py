@@ -1,4 +1,4 @@
-from model.json_model import JsonModel
+from scraper.model.json_model import JsonModel
 
 class Calendar(JsonModel):
   def __init__(self, name, meeting_date, calendar_link, 

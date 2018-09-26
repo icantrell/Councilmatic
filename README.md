@@ -8,16 +8,35 @@
   * conda env create -f environment.yml
 3. Download geckodriver and add to path
   * https://github.com/mozilla/geckodriver/releases
+  <br>
+note: We used Katalon IDE brower plugin to easy generate some of python selenium statements the normal selenium IDE no longer supports Python code exports.
   
 # start up conda env
 ```
 source activate new_councilmatic
 ```
 
+# update conda env
+```
+source activate new_councilmatic
+conda env update -f=environment.yml
+```
+
+# install conda env into jupyter notebook
+```
+source activate new_councilmatic
+python -m ipykernel install --user --name new_councilmatic --display-name "new councilmatic"
+```
+
 # To run:
 ```
-PYTHONPATH=. python scraper/calendar.py 
+python run_calendar.py 
 ```
+
+# To run in jupyter notebook
+```
+jupyter notebook calendar.ipynb
+``
 
 # Milestones:
 1. to have a web scraping library.

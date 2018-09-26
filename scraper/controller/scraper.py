@@ -25,6 +25,21 @@ class Scraper(object):
         except:
             return None
 
+    """
+    modified from https://gist.github.com/dariodiaz/3104601
+    """
+    def highlight(self, element, sleep_time=0.3):
+        """Highlights (blinks) a Selenium Webdriver element"""
+        parent = element._parent
+        def apply_style(s):
+            parent.execute_script(
+                "arguments[0].setAttribute('style', arguments[1]);",
+                element, s)
+        original_style = element.get_attribute('style')
+        apply_style("background: yellow; border: 2px solid red;")
+        time.sleep(sleep_time)
+        apply_style(original_style)
+
     def get(self, url):
         self.driver.get(url)
 
@@ -36,5 +51,6 @@ class Scraper(object):
 
     def wait(self):
         self.driver.implicitly_wait(self.wait_time)
+
 
 
