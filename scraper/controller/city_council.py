@@ -23,8 +23,7 @@ class CityCouncil(Scraper):
 
         #click on "people" button
         self.driver.find_element_by_xpath("(.//*[normalize-space(text()) and normalize-space(.)='Calendar (0)'])[1]/following::span[3]").click()
-        #wait for load
-        self.wait()
+        
 
         city_council_list = []
         
