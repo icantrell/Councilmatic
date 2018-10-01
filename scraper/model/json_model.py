@@ -1,9 +1,11 @@
+from abc import ABC, abstractmethod
 import json
 
 class JsonModel(object):
   def __init__(self):
     pass
 
+  @abstractmethod
   def to_map(self):
     pass
 

@@ -19,20 +19,29 @@ class Calendar(Scraper):
         if highlight:
             self.highlight(search_input_elt, sleep_time=sleep_time)
 
-        return search_input_elt
+        return search_input_elt     
 
-    def get_date_sel_elt(self, highlight=False, sleep_time=2):
-        date_sel_elt = self.driver.find_element_by_id('ctl00_ContentPlaceHolder1_lstYears_Input')
-        if highlight:
-            self.highlight(date_sel_elt, sleep_time=sleep_time)
+    def get_dates(self):
+        input_id = "ctl00_ContentPlaceHolder1_lstYears_Input"
+        select_li_xpath_str = "//div[@id='ctl00_ContentPlaceHolder1_lstYears_DropDown']//ul[@class='rcbList']/li[@class='rcbItem']"
 
-        return date_sel_elt
+        return self.get_select_text(input_id, select_li_xpath_str)
 
-    def get_notes_ckbx(self):
-        return self.driver.find_element_by_id('ctl00_ContentPlaceHolder1_chkOptions_0')
+    def set_date(self, date_str, sleep_time=1):
+        input_id = "ctl00_ContentPlaceHolder1_lstYears_Input"
+        select_xpath_str = "//div[@id='ctl00_ContentPlaceHolder1_lstYears_DropDown']//ul[@class='rcbList']/li[@class='rcbItem'][text() = '%s']" % date_str
+        self.set_select_elt(input_id, select_xpath_str, sleep_time)
 
-    def get_closed_caption_ckbx(self):
-        return self.driver.find_element_by_id('ctl00_ContentPlaceHolder1_chkOptions_1')
+    def get_depts(self):
+        input_id = "ctl00_ContentPlaceHolder1_lstBodies_Input"
+        select_li_xpath_str = "//div[@id='ctl00_ContentPlaceHolder1_lstBodies_DropDown']//ul[@class='rcbList']/li[@class='rcbItem']"
+
+        return self.get_select_text(input_id, select_li_xpath_str)   
+
+    def set_dept(self, dept_name, sleep_time=10):
+        input_id = "ctl00_ContentPlaceHolder1_lstBodies_Input"
+        select_xpath_str = "//div[@id='ctl00_ContentPlaceHolder1_lstBodies_DropDown']//ul[@class='rcbList']/li[@class='rcbItem'][text() = '%s']" % date_str
+        self.set_select_elt(input_id, select_xpath_str, sleep_time)
 
     def get_pagination_links(self, highlight=False, sleep_time=2):
         link_elts = self.driver.find_elements(By.XPATH,
@@ -44,37 +53,49 @@ class Calendar(Scraper):
 
         return link_elts
 
+    def set_notes_ckbx(self, val=False):
+        id_str = "ctl00_ContentPlaceHolder1_chkOptions_0"
+        self.set_chbx(id_str, val)
+
+    def set_closed_caption_ckbx(self, val=False):
+        id_str = "ctl00_ContentPlaceHolder1_chkOptions_1"
+        self.set_chbx(id_str, val)
+
+    def wait_for_login_link(self, wait_time=10):
+        self.wait_for(id_str="ctl00_hypSignIn", wait_time=wait_time)
+
     def query(self, search_str=None, date_sel=None, 
                 dept=None, notes=False, closed_caption=False,
-                sleep_time=10):
-        self.get(self.base_url)
+                sleep_time=5, wait_time=5):
+        self.set_notes_ckbx(notes)
+        self.set_closed_caption_ckbx(closed_caption)
+
+        if date_sel is not None and date_sel != "":
+            self.set_date(date_sel)     
+            self.sleep(sleep_time)  
+            self.wait_for_login_link(wait_time) 
 
         if search_str is not None and search_str != "":
             search_input_elt = self.get_search_input_elt()
             search_input_elt.send_keys(search_str)
             search_input_elt.submit()
-            time.sleep(sleep_time)
-
-        if date_sel is not None and date_sel != "":
-            date_sel_elt = Select(self.get_date_sel_elt())
-            date_sel_elt.select_by_visible_text(date_sel)
-            time.sleep(sleep_time)
+            self.sleep(sleep_time)
+            self.wait_for_login_link(wait_time) 
         
-        return self.scrape_page()
+        return self.scrape_pages(sleep_time=sleep_time)
 
-    def scrape_page(self):
+    def _scrape_page(self):
         calendar_list = []
 
         #find div that holds table with events info and extract the rows of the table.
         rows = self.driver.find_elements(By.XPATH, 
-                    "//div[@id='ctl00_ContentPlaceHolder1_divGrid']//tbody/tr")
+                    "//div[@id='ctl00_ContentPlaceHolder1_divGrid']//table[@class='rgMasterTable']/tbody/tr[@class='rgRow']")
 
-        for i, row in enumerate(rows):
-            #print(i, str(row))
+        for row in rows:
             #get each column of the row
             cols = row.find_elements(By.XPATH, 'td')
 
-            #extract data.
+            # extract data
             name = cols[0].text
             meeting_date = cols[1].text
 
@@ -88,32 +109,35 @@ class Calendar(Scraper):
             minutes = self.elt_get_href(cols[7])
             video = self.elt_get_href(cols[8])
             eComment = self.elt_get_href(cols[9])
-
-            """
-            print("name: ", name)
-            print("meeting_date: ", meeting_date)
-            print("calendar_link: ", calendar_link)
-            print("meeting_time: ", meeting_time)
-            print("meeting_location: ", meeting_location) 
-            print("meeting_details: ", meeting_details)
-            print("agenda: ", agenda)
-            print("minutes: ", minutes)
-            print("video: ", video)
-            print("eComment: ", eComment)
-            """
             
             #create calendar event data storage object.
-            calendar = CalendarModel(name, meeting_date, calendar_link, 
-                                        meeting_time, meeting_location, 
-                                        meeting_details, agenda, 
-                                        minutes, video, eComment)
+            calendar = CalendarModel(
+                name, meeting_date, calendar_link, 
+                meeting_time, meeting_location, 
+                meeting_details, agenda, 
+                minutes, video, eComment)
             #add to event list
             calendar_list.append(calendar)
 
         return calendar_list        
 
+    def scrape_page(self, num_of_retries=3, sleep_time=3):
+        return self.retry(
+            fnc=self._scrape_page, 
+            num_of_retries=num_of_retries,
+            sleep_time=sleep_time,
+            err_msg="Scaping page failed"
+        )
+
+    def go_to_cal_page(self):
+        self.get(self.base_url)
+
     def run(self):
-        calendar_list = self.query(search_str="lead")
+        self.go_to_cal_page()
+
+        #calendar_list = self.query(search_str="lead", date_sel="2018", notes=True)
+        #calendar_list = self.query(date_sel="2018")
+        calendar_list = self.query(date_sel="2018", closed_caption=True)
 
         cl_json = CalendarModel.to_map_list_json(calendar_list)
 

@@ -29,8 +29,37 @@ python -m ipykernel install --user --name new_councilmatic --display-name "new c
 ```
 
 # To run:
+
+## Calendar
+
+### Help
+
 ```
-python run_calendar.py 
+python run_calendar.py -h
+```
+
+### By Year Example (2018)
+
+```
+python run_calendar.py -d 2018
+```
+
+### By Search Words Example (2018)
+
+```
+python run_calendar.py -s "parking"
+```
+
+### By Year and Search Words Example (2018)
+
+```
+python run_calendar.py -d 2018 -s "parking"
+```
+
+### Save as CSV Example
+
+```
+python run_calendar.py -d 2018 -s "parking" > parking2018.csv
 ```
 
 # To run in jupyter notebook
