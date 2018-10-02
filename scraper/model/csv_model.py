@@ -25,7 +25,7 @@ class CSVModel(object):
 
   @classmethod
   def to_csv(cls, l):
-    ret_str_list = [", ".join(cls.field_names)]
+    ret_str_list = [",".join(cls.field_names)]
 
     for elt in l:
       ret_str_list.append(elt.to_csv_str())
