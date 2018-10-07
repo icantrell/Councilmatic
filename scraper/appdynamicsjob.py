@@ -13,7 +13,7 @@ class AppDynamicsJob(unittest.TestCase):
         # as documented in https://docs.appdynamics.com/display/PRO44/Write+Your+First+Script
         self.driver = webdriver.Firefox()
         self.driver.implicitly_wait(30)
-        self.base_url = "https://www.katalon.com/"
+        self.default_url = "https://www.katalon.com/"
         self.verificationErrors = []
         self.accept_next_alert = True
     

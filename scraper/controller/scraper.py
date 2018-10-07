@@ -9,10 +9,16 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 import unittest, time, re
+from urllib.parse import urlsplit
 
 class Scraper(ABC):
-    def __init__(self, base_url, wait=30, driver=None):
-        self.base_url = base_url
+    def __init__(self, default_url, wait=30, driver=None):
+        self.default_url = default_url
+
+        self.base_url = None
+        if self.default_url is not None:
+            self.base_url = "{0.scheme}://{0.netloc}/".format(urlsplit(self.default_url))
+
         self.wait_time = wait
         if driver is None:
             # default to firefox
@@ -28,6 +34,14 @@ class Scraper(ABC):
             return link_elt.get_attribute('href')
         except:
             return None
+
+    def get_web_element_attribute_names(self, web_element):
+        """Get all attribute names of a web element"""
+        # get element html
+        html = web_element.get_attribute("outerHTML")
+        # find all with regex
+        pattern = """([a-z]+-?[a-z]+_?)='?"?"""
+        return re.findall(pattern, html)
 
     def get_select_text(self, input_id, select_li_xpath_str):
         # click on the input element to get the select menu to appear

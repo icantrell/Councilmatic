@@ -10,12 +10,12 @@ from scraper import Scraper
 from model.legislation import Legislation as LegislationModel
 
 class Legislation(Scraper):
-    def __init__(self, base_url='https://oakland.legistar.com/Legislation.aspx', wait=30, driver=None):
-        super().__init__(base_url, wait, driver)    
+    def __init__(self, default_url='https://oakland.legistar.com/Legislation.aspx', wait=30, driver=None):
+        super().__init__(default_url, wait, driver)    
 
     def run(self):
         #do a GET request to base url.
-        self.get(self.base_url)
+        self.get(self.default_url)
 
         #empty most of the time. So try a different year for testing purposes
         #self.driver.find_element_by_id("ctl00_ContentPlaceHolder1_lstYears_Arrow").click()

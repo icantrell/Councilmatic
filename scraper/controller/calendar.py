@@ -4,15 +4,14 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
-from selenium.webdriver.support.ui import Select
 import unittest, time, re
 
 from .scraper import Scraper
 from ..model.calendar import Calendar as CalendarModel
 
 class Calendar(Scraper):
-    def __init__(self, base_url='https://oakland.legistar.com/Calendar.aspx', wait=30, driver=None):
-        super().__init__(base_url, wait, driver)    
+    def __init__(self, default_url='https://oakland.legistar.com/Calendar.aspx', wait=30, driver=None):
+        super().__init__(default_url, wait, driver)    
 
     def get_search_input_elt(self, highlight=False, sleep_time=2):
         search_input_elt = self.driver.find_element(By.XPATH, "//input[@name='ctl00$ContentPlaceHolder1$txtSearch']")
@@ -84,6 +83,24 @@ class Calendar(Scraper):
         
         return self.scrape_pages(sleep_time=sleep_time)
 
+    def get_video_link(self, base_url, video_elt):
+        if video_elt is None:
+            return None
+
+        link_elt = video_elt.find_element(By.TAG_NAME, 'a')
+        if link_elt is None:
+            return None
+
+        onclick_str = link_elt.get_attribute('onclick')
+        if onclick_str is None or onclick_str == "":
+            return None 
+
+        video_links = re.findall(r"'(.*?)'",  onclick_str)
+        if video_links is None or len(video_links) == 0:
+            return None
+
+        return "%s%s" % (base_url, video_links[0])
+
     def _scrape_page(self):
         calendar_list = []
 
@@ -107,7 +124,8 @@ class Calendar(Scraper):
             meeting_details = self.elt_get_href(cols[5])
             agenda = self.elt_get_href(cols[6])
             minutes = self.elt_get_href(cols[7])
-            video = self.elt_get_href(cols[8])
+
+            video = self.get_video_link(self.base_url, cols[8])
             eComment = self.elt_get_href(cols[9])
             
             #create calendar event data storage object.
@@ -130,7 +148,7 @@ class Calendar(Scraper):
         )
 
     def go_to_cal_page(self):
-        self.get(self.base_url)
+        self.get(self.default_url)
 
     def run(self):
         self.go_to_cal_page()
