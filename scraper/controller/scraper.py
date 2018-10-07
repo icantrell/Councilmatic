@@ -28,6 +28,9 @@ class Scraper(ABC):
         
         self.driver.implicitly_wait(wait)
 
+    def wait_for_login_link(self, wait_time=10):
+        self.wait_for(id_str="ctl00_hypSignIn", wait_time=wait_time)
+
     def elt_get_href(self, elt):
         try:
             link_elt = elt.find_element(By.TAG_NAME, 'a')
@@ -51,19 +54,22 @@ class Scraper(ABC):
 
         return [x.text for x in li_elts]
 
-    def set_select_elt(self, input_id, select_li_xpath_str, num_of_retries=3,
+    def set_select_elt(self, input_id, select_li_xpath_str, val, num_of_retries=3,
                         sleep_time=1):
-        # click on the input element to get the select menu to appear
-        self.driver.find_element_by_id(input_id).click()
+        select_input = self.driver.find_element_by_id(input_id)
 
-        def fn():
-            return self.driver.find_element_by_xpath(select_li_xpath_str)
+        if select_input.get_attribute('value') != val:
+            # only click is the new select value is different from the current value
+            select_input.click()
 
-        new_selected_elt = self.retry(
-            fn, num_of_retries=num_of_retries, 
-            sleep_time=sleep_time, err_msg="Set select failed")
+            def fn():
+                return self.driver.find_element_by_xpath(select_li_xpath_str)
 
-        new_selected_elt.click()
+            new_selected_elt = self.retry(
+                fn, num_of_retries=num_of_retries, 
+                sleep_time=sleep_time, err_msg="Set select failed")
+
+            new_selected_elt.click()
 
     def set_chbx(self, id_str, val):
         ckbx = self.driver.find_element_by_id(id_str)
@@ -94,14 +100,17 @@ class Scraper(ABC):
         self.driver.get(url)
 
     def retry(self, fnc, num_of_retries=3, sleep_time=1, err_msg="Exceeded maximum number of retries"):
+        err = None
         for i in range(num_of_retries):
             try:
                 return fnc()
             except Exception as e:
+                err = e
                 #print(e)
                 self.sleep(sleep_time)
 
-        raise Exception(err_msg)     
+        err_msg = "%s - %s" % (err_msg, str(err))
+        raise Exception(err_msg)
 
     def _get_pagination_link_dict(self):
         page_link_dict = {}
@@ -134,9 +143,18 @@ class Scraper(ABC):
                             sleep_time=sleep_time,
                             err_msg="Error getting pagination links")
 
+
     @abstractmethod
-    def scrape_page(self, num_of_retries=3, sleep_time=3):
+    def _scrape_page(self, num_of_retries=3, sleep_time=3):
         pass
+
+    def scrape_page(self, num_of_retries=3, sleep_time=3):
+        return self.retry(
+            fnc=self._scrape_page, 
+            num_of_retries=num_of_retries,
+            sleep_time=sleep_time,
+            err_msg="Scraping page failed"
+        )
 
     def scrape_pages(self, num_of_retries=3, sleep_time=5):
         data = self.scrape_page(num_of_retries)

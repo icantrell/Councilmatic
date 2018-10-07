@@ -29,7 +29,7 @@ class Calendar(Scraper):
     def set_date(self, date_str, sleep_time=1):
         input_id = "ctl00_ContentPlaceHolder1_lstYears_Input"
         select_xpath_str = "//div[@id='ctl00_ContentPlaceHolder1_lstYears_DropDown']//ul[@class='rcbList']/li[@class='rcbItem'][text() = '%s']" % date_str
-        self.set_select_elt(input_id, select_xpath_str, sleep_time)
+        self.set_select_elt(input_id, select_xpath_str, date_str, sleep_time)
 
     def get_depts(self):
         input_id = "ctl00_ContentPlaceHolder1_lstBodies_Input"
@@ -40,7 +40,7 @@ class Calendar(Scraper):
     def set_dept(self, dept_name, sleep_time=10):
         input_id = "ctl00_ContentPlaceHolder1_lstBodies_Input"
         select_xpath_str = "//div[@id='ctl00_ContentPlaceHolder1_lstBodies_DropDown']//ul[@class='rcbList']/li[@class='rcbItem'][text() = '%s']" % date_str
-        self.set_select_elt(input_id, select_xpath_str, sleep_time)
+        self.set_select_elt(input_id, select_xpath_str, dept_name, sleep_time)
 
     def get_pagination_links(self, highlight=False, sleep_time=2):
         link_elts = self.driver.find_elements(By.XPATH,
@@ -59,9 +59,6 @@ class Calendar(Scraper):
     def set_closed_caption_ckbx(self, val=False):
         id_str = "ctl00_ContentPlaceHolder1_chkOptions_1"
         self.set_chbx(id_str, val)
-
-    def wait_for_login_link(self, wait_time=10):
-        self.wait_for(id_str="ctl00_hypSignIn", wait_time=wait_time)
 
     def query(self, search_str=None, date_sel=None, 
                 dept=None, notes=False, closed_caption=False,
@@ -138,14 +135,6 @@ class Calendar(Scraper):
             calendar_list.append(calendar)
 
         return calendar_list        
-
-    def scrape_page(self, num_of_retries=3, sleep_time=3):
-        return self.retry(
-            fnc=self._scrape_page, 
-            num_of_retries=num_of_retries,
-            sleep_time=sleep_time,
-            err_msg="Scaping page failed"
-        )
 
     def go_to_cal_page(self):
         self.get(self.default_url)

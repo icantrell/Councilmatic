@@ -19,3 +19,6 @@ class Department(JsonModel):
       'member_end_date': self.member_end_date,
       'appointed_by': self.appointed_by
     }
+
+  def jsonable(self):
+    return self.to_map()

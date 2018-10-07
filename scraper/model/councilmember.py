@@ -1,6 +1,6 @@
 from .json_model import JsonModel
 
-class CityCouncil(JsonModel):
+class CouncilMember(JsonModel):
   def __init__(self, name, email, website, 
                 departments = {}, 
                 last_member_start_date = None):
@@ -17,9 +17,11 @@ class CityCouncil(JsonModel):
       'name': self.name, 
       'email': self.email, 
       'website': self.website, 
-      'departments': self.departments
-      'last_member_start_date': self.last_member_start_date
+      # TODO: fix serialization for departments
+      'departments': [x for x in self.departments.keys()],
+      'last_member_start_date': str(self.last_member_start_date)
     }
+
 
 
 
