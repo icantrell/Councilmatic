@@ -20,7 +20,7 @@ def get_args():
   parser.add_argument("-c", "--cc", help="closed caption flag (i.e. 0, 1)", 
                         type=int, default=0)
   parser.add_argument("-w", "--wait_time", help="wait time", type=int,
-                        default=1)
+                        default=5)
   return parser.parse_args()
 
 def show_dates():
@@ -55,8 +55,9 @@ def scrape(args):
     dept=args.dept, 
     notes=args.notes, 
     closed_caption=args.cc,
-    sleep_time=args.wait_time)
-  cal.close()
+    sleep_time=args.wait_time,
+    wait_time=args.wait_time)
+  #cal.close()
 
   print(CalendarModel.to_csv(cal_rows))
 

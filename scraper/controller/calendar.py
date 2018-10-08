@@ -60,16 +60,15 @@ class Calendar(Scraper):
         id_str = "ctl00_ContentPlaceHolder1_chkOptions_1"
         self.set_chbx(id_str, val)
 
+    def click_search_btn(self):
+        id_str = "ctl00_ContentPlaceHolder1_btnSearch"
+        self.driver.find_element_by_id(id_str).click()
+
     def query(self, search_str=None, date_sel=None, 
                 dept=None, notes=False, closed_caption=False,
-                sleep_time=5, wait_time=5):
+                sleep_time=10, wait_time=5):
         self.set_notes_ckbx(notes)
         self.set_closed_caption_ckbx(closed_caption)
-
-        if date_sel is not None and date_sel != "":
-            self.set_date(date_sel)     
-            self.sleep(sleep_time)  
-            self.wait_for_login_link(wait_time) 
 
         if search_str is not None and search_str != "":
             search_input_elt = self.get_search_input_elt()
@@ -77,7 +76,16 @@ class Calendar(Scraper):
             search_input_elt.submit()
             self.sleep(sleep_time)
             self.wait_for_login_link(wait_time) 
-        
+
+        if date_sel is not None and date_sel != "":
+            self.set_date(date_sel)     
+            self.sleep(sleep_time)  
+            self.wait_for_login_link(wait_time) 
+
+        self.click_search_btn()
+        self.sleep(sleep_time)
+        self.wait_for_login_link(wait_time) 
+
         return self.scrape_pages(sleep_time=sleep_time)
 
     def get_video_link(self, base_url, video_elt):
@@ -103,36 +111,37 @@ class Calendar(Scraper):
 
         #find div that holds table with events info and extract the rows of the table.
         rows = self.driver.find_elements(By.XPATH, 
-                    "//div[@id='ctl00_ContentPlaceHolder1_divGrid']//table[@class='rgMasterTable']/tbody/tr[@class='rgRow']")
+                    "//div[@id='ctl00_ContentPlaceHolder1_divGrid']//table[@class='rgMasterTable']/tbody/tr")
 
         for row in rows:
             #get each column of the row
             cols = row.find_elements(By.XPATH, 'td')
 
-            # extract data
-            name = cols[0].text
-            meeting_date = cols[1].text
+            if cols is not None and len(cols) > 0:
+                # extract data
+                name = cols[0].text
+                meeting_date = cols[1].text
 
-            calendar_link = self.elt_get_href(cols[2])
+                calendar_link = self.elt_get_href(cols[2])
 
-            meeting_time = cols[3].text
+                meeting_time = cols[3].text
 
-            meeting_location = cols[4].text
-            meeting_details = self.elt_get_href(cols[5])
-            agenda = self.elt_get_href(cols[6])
-            minutes = self.elt_get_href(cols[7])
+                meeting_location = cols[4].text
+                meeting_details = self.elt_get_href(cols[5])
+                agenda = self.elt_get_href(cols[6])
+                minutes = self.elt_get_href(cols[7])
 
-            video = self.get_video_link(self.base_url, cols[8])
-            eComment = self.elt_get_href(cols[9])
+                video = self.get_video_link(self.base_url, cols[8])
+                eComment = self.elt_get_href(cols[9])
             
-            #create calendar event data storage object.
-            calendar = CalendarModel(
-                name, meeting_date, calendar_link, 
-                meeting_time, meeting_location, 
-                meeting_details, agenda, 
-                minutes, video, eComment)
-            #add to event list
-            calendar_list.append(calendar)
+                #create calendar event data storage object.
+                calendar = CalendarModel(
+                    name, meeting_date, calendar_link, 
+                    meeting_time, meeting_location, 
+                    meeting_details, agenda, 
+                    minutes, video, eComment)
+                #add to event list
+                calendar_list.append(calendar)
 
         return calendar_list        
 
