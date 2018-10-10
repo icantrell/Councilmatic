@@ -1,6 +1,19 @@
 from scraper.model.json_model import JsonModel
+from scraper.model.csv_model import CSVModel
 
-class Calendar(JsonModel):
+class Calendar(JsonModel, CSVModel):
+  field_names = [
+    'name', 
+    'meeting_date', 
+    'calendar_link', 
+    'meeting_time', 
+    'meeting_location', 
+    'meeting_details', 
+    'agenda', 
+    'minutes', 
+    'video', 
+    'eComment']  
+
   def __init__(self, name, meeting_date, calendar_link, 
     meeting_time, meeting_location, meeting_details, agenda, 
     minutes, video, eComment):
@@ -30,6 +43,11 @@ class Calendar(JsonModel):
       'video': self.video, 
       'eComment': self.eComment
     }
+
+  
+
+    
+
 
 
 

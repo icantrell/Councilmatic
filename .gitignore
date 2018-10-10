@@ -4,3 +4,5 @@ temp
 geckodriver*
 __pycache__
 *.pyc
+.~*#
+
