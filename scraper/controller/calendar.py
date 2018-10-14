@@ -15,8 +15,6 @@ class Calendar(Scraper):
     def __init__(self, default_url='https://oakland.legistar.com/Calendar.aspx', wait=30, driver=None):
         super().__init__(default_url, wait, driver)   
 
-    
-
     def get_files(self, calendar_events):
         #get all city council files referenced in the calendar events.
         bridges = []

@@ -19,16 +19,43 @@ class Calendar(JsonModel, CSVModel):
     minutes, video, eComment):
     super().__init__()
 
-    self.name = name
+    self._name = name
     self.meeting_date = meeting_date
     self.calendar_link = calendar_link
     self.meeting_time = meeting_time
-    self.meeting_location = meeting_location 
-    self.meeting_details = meeting_details
+    self._meeting_location = meeting_location 
+    self._meeting_details = meeting_details
     self.agenda = agenda
     self.minutes = minutes
     self.video = video
     self.eComment = eComment
+
+  def filter_newlines(self, text_str):
+    return text_str.replace('\n', ' ')
+
+  @property
+  def name(self):
+    return self.filter_newlines(self._name)
+
+  @name.setter
+  def name(self, raw_name):
+    self._name = raw_name
+
+  @property
+  def meeting_location(self):
+    return self.filter_newlines(self._meeting_location)
+
+  @meeting_location.setter
+  def meeting_location (self, raw_meeting_location):
+    self._meeting_location = raw_meeting_location 
+
+  @property
+  def meeting_details(self):
+    return self.filter_newlines(self._meeting_details)
+
+  @meeting_details.setter
+  def meeting_details(self, raw_meeting_details):
+    self._meeting_details = raw_meeting_details
 
   def to_map(self):
     return {
