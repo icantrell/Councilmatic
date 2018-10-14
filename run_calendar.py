@@ -57,7 +57,7 @@ def scrape(args):
     closed_caption=args.cc,
     sleep_time=args.wait_time,
     wait_time=args.wait_time)
-  #cal.close()
+  cal.close()
 
   print(CalendarModel.to_csv(cal_rows))
 
