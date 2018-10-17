@@ -31,9 +31,15 @@ class Calendar(JsonModel, CSVModel):
         self.eComment = eComment
 
     def filter_newlines(self, text_str):
+        if text_str is None:
+            return None
+            
         return text_str.replace('\n', ' ')
 
     def remove_starting_asterisk(self, text_str):
+        if text_str is None:
+            return None
+
         if text_str.startswith('*'):
             return text_str[1:]
         else:
