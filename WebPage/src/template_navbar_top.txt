@@ -1,0 +1,4 @@
+          <! Begin template_navbar_top.html>
+<! Navigation bar>
+<nav class="navbar navbar-expand-sm bg-light">
+  <ul class="navbar-nav">
