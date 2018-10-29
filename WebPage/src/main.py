@@ -50,7 +50,7 @@ def read_csvfile(datafile, search_string, f2):
                 if present < meeting_deadline:
                     link_text = "Meeting at " + meeting_time + " in the " + data[i][4]
                     write_http_row(f2, meeting_date, link, link_text)
-                elif present >  datetime.strptime(meeting_date, '%m/%d/%Y') + timedelta(days=10):
+                elif present > datetime.strptime(meeting_date, '%m/%d/%Y') + timedelta(days=10):
                     # Checking  to see if 10 days have passed since meeting.  Only keep if have video minutes
                     if link_text == "Click for Video Minutes":
                         write_http_row(f2, meeting_date, link, link_text)  # Need video minutes for this length of time
@@ -97,7 +97,7 @@ def make_navbar(list, year_list, committee_list, loop_type, loop_index, f2):
             committee_bar = str(loop_index)
 
         urlnavbar = '../' + year_bar + '/committee' + committee_bar + ".html" #looping over years
-        linenav = '<a class="nav-link" href="' + urlnavbar + '"#">' + item + '</a>'
+        linenav = '<a class="nav-link" href="' + urlnavbar + ' "href=#">' + item + '</a>'
         f2.write(linenav + "\n")
 
         f2.write("    </li>" + "\n")
