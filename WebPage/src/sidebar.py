@@ -35,7 +35,6 @@ def write_day_header(f2, day1, day2):
     f2.write('<div class="cl_copy">' + day2 + '</div>' "\n")
     f2.write('</div>' + "\n")
     f2.write('</div>' + "\n")
-    f2.write('<br>' + "\n")
 
 
 def write_event_header(f2, time_event, link_calendar, name_committee, name_location):
