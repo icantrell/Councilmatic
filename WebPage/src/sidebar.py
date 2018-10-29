@@ -27,6 +27,7 @@ def read_csv_file(datafile, elements):
                     elements[i-1].append(0)
                     elements[i-1][j] = data[i][j]
 
+
 def write_day_header(f2, day1, day2):
     f2.write('<div class="calendar_plan">' + "\n")
     f2.write('<div class="cl_plan">' + "\n")
@@ -36,11 +37,12 @@ def write_day_header(f2, day1, day2):
     f2.write('</div>' + "\n")
     f2.write('<br>' + "\n")
 
+
 def write_event_header(f2, time_event, link_calendar, name_committee, name_location):
     f2.write('<div class="event_item">' + "\n")
     f2.write('<div class="ei_Dot"></div>' + "\n")
     f2.write('<div class="ei_Title">' + time_event + "\n")
-    f2.write('<a href="' + link_calendar + '“>' + "\n")
+    f2.write('<a href="' + link_calendar + '">' + "\n")
     f2.write('<img border="0" alt="calendar link" src="../images/ical.gif" width="15" height="15"> </a></div>' + "\n")
     f2.write('<div class="ei_Copy"> <font size="+1">' + name_committee + '</font> <br/> ' + name_location + "\n")
     f2.write('</div>' + "\n")
