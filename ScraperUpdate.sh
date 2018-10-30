@@ -26,7 +26,7 @@ python run_calendar.py --show_dates >> temp.tmp
 #
 if `grep -q "$CURRENTYEAR" "temp.tmp"`; then
     echo "Processing Current Year Scraper File"
-    python run_calendar.py -d "$CURRENTYEAR"  > WebPage/website/year"$CURRENTYEAR".csv
+    python run_calendar.py -d "$CURRENTYEAR"  > WebPage/website/scraped/year"$CURRENTYEAR".csv
 fi
 #
 # Check if December
@@ -34,14 +34,14 @@ fi
 if [ "$CURRENTMONTH" == "12" ];then
     if `grep -q "$NEXTYEAR" "temp.tmp"`; then
         echo "December - Processing Next Year"
-        python run_calendar.py -d "$NEXTYEAR"  > WebPage/website/year"$NEXTYEAR".csv
+        python run_calendar.py -d "$NEXTYEAR"  > WebPage/website/scraped/year"$NEXTYEAR".csv
     else
         echo "Next year file not ready"
     fi
 elif [ "$CURRENTMONTH" == "1" ];then
     if `grep -q "$LASTYEAR" "temp.tmp"`; then
         echo "Current month is January - Processing Last Year"
-        python run_calendar.py -d "$LASTYEAR"  > WebPage/website/year"$LASTYEAR".csv
+        python run_calendar.py -d "$LASTYEAR"  > WebPage/website/scraped/year"$LASTYEAR".csv
     else
         echo "Previous Year not available"
     fi
