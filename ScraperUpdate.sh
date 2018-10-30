@@ -20,7 +20,7 @@ CURRENTMONTH=`date +"%m"`
 #
 #Get a list of current dates
 #
-python run_calendar.py --show_dates >> temp.tmp
+python run_calendar.py --show_dates > temp.tmp
 #
 # Scrape the current year if it exists
 #
