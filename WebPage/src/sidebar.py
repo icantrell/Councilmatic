@@ -49,7 +49,7 @@ def write_event_header(f2, time_event, link_calendar, name_committee, name_locat
     f2.write(' ' + "\n")
 
 
-version = "1.0"
+version = "2.0"
 lookAhead = 14  # Number of the days to look ahead for meetings
 
 print("Running Software Version ", version, " - sidebar.py ")
@@ -83,30 +83,30 @@ for year in years:
 
 numrows = len(schedule)
 
-today = datetime.now() - timedelta(days=1)
+today = datetime.now()
 lastdate = today - timedelta(days=1)
 tomorrow = today + timedelta(days=1)
-print (tomorrow)
+today_day = str(today.month) + '/' + str(today.day) + '/' + str(today.year)
+tomorrow_day = str(tomorrow.month) + '/' + str(tomorrow.day) + '/' + str(tomorrow.year)
 for i in range(numrows-1, 0, -1):
     event_day = schedule[i][1]
     if lastdate != event_day:
         lastdate = event_day
         new_day = True
-        if event_day == today:
-            day_of_week = "Today"
-        elif event_day == tomorrow:
-            day_of_week = "Tomorrow"
-        else:
-            day_datetime = datetime.strptime(event_day, '%m/%d/%Y')
-            day_label = datetime.date(day_datetime).weekday()
-            day_of_week = calendar.day_name[day_label]
     else:
         new_day = False
 
     if new_day:
-        print()
+        day_datetime = datetime.strptime(event_day, '%m/%d/%Y')
+        day_label = datetime.date(day_datetime).weekday()
+        day_of_week = calendar.day_name[day_label]
+        if event_day == today_day:
+            day_of_week = "Today"
+        elif event_day == tomorrow_day:
+            day_of_week = "Tomorrow"
+
+        print(event_day)
         print("New Day")
-        print(day_of_week, event_day)
         write_day_header(f1,day_of_week, event_day)
 
     committee = schedule[i][0]
@@ -114,10 +114,10 @@ for i in range(numrows-1, 0, -1):
         committee = "City Council - (" + committee + ")"
     print("Meeting description")
     print(committee)  # Committee
-    print(schedule[i][2]) # Calendar
-    print(schedule[i][3]) # Time
-    print(schedule[i][4]) # Room
-    write_event_header(f1,schedule[i][3], schedule[i][2], committee, schedule[i][4])
+    print(schedule[i][2])  # Calendar
+    print(schedule[i][3])  # Time
+    print(schedule[i][4])  # Room
+    write_event_header(f1, schedule[i][3], schedule[i][2], committee, schedule[i][4])
 
 f1.close()  # Close the file
 
