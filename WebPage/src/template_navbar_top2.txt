@@ -1,5 +1,5 @@
           <! Begin template_navbar_top.txt>
-   <div align="center"><i>Select the City Council or its subcommittees for current and future meetings</i></div>
+   <div align="center"><i>Select a year of interest</i></div>
 <! Navigation bar>
 <nav class="navbar navbar-expand-sm bg-light">
   <ul class="navbar-nav">

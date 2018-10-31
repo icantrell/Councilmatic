@@ -40,8 +40,8 @@
                  <td style="margin-left: -56px; width: 1453px;"><br>
                                <div align="center"><img src="../images/City-of-Oakland-Logo-GREEN.png"
                          alt="logo"
-                         height="214"
-                         width="300">
+                         height="321"
+                         width="450">
                      </div>
                   <div class="container">
 

@@ -34,7 +34,7 @@ def read_csvfile(datafile, search_string, f2):
 
                 if https in meeting_video:
                     link = meeting_video
-                    link_text = "Click for Video Minutes"
+                    link_text = "Click for Video Minutes and Annotated Agenda"
                 elif https in meeting_minutes:
                     link = meeting_minutes
                     link_text = "Click for Minutes"
@@ -52,7 +52,7 @@ def read_csvfile(datafile, search_string, f2):
                     write_http_row(f2, meeting_date, link, link_text)
                 elif present > datetime.strptime(meeting_date, '%m/%d/%Y') + timedelta(days=10):
                     # Checking  to see if 10 days have passed since meeting.  Only keep if have video minutes
-                    if link_text == "Click for Video Minutes":
+                    if link_text == "Click for Video Minutes and Annotated Agenda":
                         write_http_row(f2, meeting_date, link, link_text)  # Need video minutes for this length of time
                 else:
                     write_http_row(f2, meeting_date, link, link_text)  # print out meeting details in prelimary time
@@ -80,9 +80,12 @@ def write_http_row(f2, date, link, message):
 #
 # Write out a navigation bar
 #
-def make_navbar(list, year_list, committee_list, loop_type, loop_index, f2):
+def make_navbar(type, list, year_list, committee_list, loop_type, loop_index, f2):
     #   write the top of navbar
-    url = "template_navbar_top.txt"
+    if type ==1:
+        url = "template_navbar_top.txt"
+    else:
+        url = "template_navbar_top2.txt"
     create_html(url, f2)  # Create  template for HTML page
     #
     for index, item in enumerate(list):
@@ -132,7 +135,7 @@ for index_year, year in enumerate(years):
 
         loop_committee = True # Loop over committees
         loop_index = index_year  # Fix the year
-        make_navbar(committees, years, committees, loop_committee, loop_index, f1)
+        make_navbar(1, committees, years, committees, loop_committee, loop_index, f1)
 
         #  write the top of the web page
         url = "template_above_table.txt"
@@ -157,7 +160,7 @@ for index_year, year in enumerate(years):
         # create the lower navigation bar
         loop_committee = False  # Loop over years
         loop_index = index  # Fix the year
-        make_navbar(years, years, committees, loop_committee, loop_index, f1)
+        make_navbar(2, years, years, committees, loop_committee, loop_index, f1)
 
         # write the bottom of the web page
         url = "template_bottom.txt"
