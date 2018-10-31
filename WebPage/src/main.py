@@ -115,7 +115,8 @@ def make_navbar(type, list, year_list, committee_list, loop_type, loop_index, f2
 
 
 version = "3.0"
-print("Running Software Version", version)
+print(" ")
+print("Running main.py – Version", version)
 print(" ")
 
 committees = ["City Council", "Rules & Legislation", "Public Works", "Life Enrichment", "Public Safety",
@@ -168,5 +169,6 @@ for index_year, year in enumerate(years):
         f1.write(" ")
 
         f1.close()  # Close the file
+        print("End of main.py")
 
 quit()

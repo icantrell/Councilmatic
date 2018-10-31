@@ -52,6 +52,7 @@ def write_event_header(f2, time_event, link_calendar, name_committee, name_locat
 version = "2.0"
 lookAhead = 14  # Number of the days to look ahead for meetings
 
+print(" ")
 print("Running Software Version ", version, " - sidebar.py ")
 print(" ")
 
@@ -120,5 +121,6 @@ for i in range(numrows-1, 0, -1):
     write_event_header(f1, schedule[i][3], schedule[i][2], committee, schedule[i][4])
 
 f1.close()  # Close the file
+print("End of sidebar.py")
 
 quit()
