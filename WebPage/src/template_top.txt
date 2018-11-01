@@ -1,4 +1,5 @@
-<!DOCTY<!DOCTYPE html>
+<!DOCTYPE html>
+<!Begin template_top.txt>
        <html lang="en">
          <head>
            <meta http-equiv="content-type" content="text/html; charset=utf-8">
@@ -31,8 +32,8 @@
 
                      <div class="calendar_header">
                        <h1 class="header_title" style="width: 313px;">City of Oakland
-                         Council Meetings</h1>
-                       <p class="header_copy"> Calendar</p>
+                         Council Calendar</h1>
+                       <p class="header_copy">Click icons for more info</p>
                      </div>
                      <div id="headerDiv"></div>
                      <!--Bring in Calendar Include file--> </div>
@@ -44,4 +45,5 @@
                          width="450">
                      </div>
                   <div class="container">
-
+<!End template_top.txt>
+<! >

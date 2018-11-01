@@ -1,3 +1,5 @@
-                    <! Begin template_navbar_bottom.txt>
+<! >
+<!Begin template_navbar_bottom.txt>
   </ul>
 </nav>
+<!End template_navbar_bottom.txt>

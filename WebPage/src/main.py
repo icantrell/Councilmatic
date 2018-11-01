@@ -8,6 +8,12 @@ import csv
 from datetime import datetime, timedelta
 
 
+def dateLessThanEqual(date1, date2):  # Compare whether deadline has passed
+    datetime1 = datetime.strptime(date1, '%m/%d/%Y')
+    datetime2 = datetime.strptime(date2, '%m/%d/%Y')
+    return datetime1 <= datetime2
+
+
 def create_html(url_open, fx):  # Read a template file and then write it main file
     in_file = open(url_open, 'r')
     page = in_file.read()
@@ -23,12 +29,15 @@ def read_csvfile(datafile, search_string, f2):
     citycouncil = search_string
     https = "https://"
     for i in range(numrows):
+
         if len(data[i][:]) >= 9:
             meeting = data[i][0]
+            meeting = meeting.replace(" and ", " & ")  # must do this because non-standardization of Oakland
             if citycouncil in meeting:
                 meeting_video = data[i][8]
                 meeting_date = data[i][1]
                 meeting_time = data[i][3]
+                meeting_room = data[i][4]
                 meeting_agenda = data[i][6]
                 meeting_minutes = data[i][7]
                 ecomment = data[i][9]
@@ -46,13 +55,15 @@ def read_csvfile(datafile, search_string, f2):
                     link = 'none'
                     link_text = 'none'
 
-                present = datetime.now()
-                meeting_deadline = datetime.strptime(meeting_date, '%m/%d/%Y') + timedelta(days=1)
-                if present < meeting_deadline:
-                    link_text = "Meeting at " + meeting_time + " in the " + data[i][4]
+                present = datetime.now().strftime('%m/%d/%Y')
+                agenda_deadline = datetime.strptime(meeting_date, '%m/%d/%Y') + timedelta(days=10)
+                agenda_deadline = agenda_deadline.strftime('%m/%d/%Y')
+
+                if dateLessThanEqual(present, meeting_date):
+                    link_text = "Meeting at " + meeting_time + " in the " + meeting_room
                     write_http_row(f2, meeting_date, link, link_text, ecomment)
-                elif present > datetime.strptime(meeting_date, '%m/%d/%Y') + timedelta(days=10):
-                    # Checking  to see if 10 days have passed since meeting.  Only keep if have video minutes
+                elif dateLessThanEqual(agenda_deadline, present):
+                    # 10 days have passed since meeting.  Only keep if have video minutes
                     if link_text == "Click for Video Minutes and Agenda":
                         # Need video minutes for this length of time
                         write_http_row(f2, meeting_date, link, link_text, "video")
@@ -76,7 +87,6 @@ def write_http_row(f2, date, link, message, emessage):
     elif emessage == "video":
         lineout = '<td> <a href="' + link + '" target=\n_top">' + message
     else:
-        print("emessage",emessage)
         lineout = '<td>' + message + " | "'<a href="' + link + '" target=\n_top">' + "Click for agenda"
 
     if https in emessage:       # to add e-comment
@@ -114,7 +124,7 @@ def make_navbar(type, list, year_list, committee_list, loop_type, loop_index, f2
             committee_bar = str(loop_index)
 
         urlnavbar = '../' + year_bar + '/committee' + committee_bar + ".html" #looping over years
-        linenav = '<a class="nav-link" href="' + urlnavbar + ' "href=#">' + item + '</a>'
+        linenav = '<a class="nav-link" href="' + urlnavbar + ' "href=#">' + item + '</a>'   #Problem may be here
         f2.write(linenav + "\n")
 
         f2.write("    </li>" + "\n")
@@ -128,13 +138,11 @@ def make_navbar(type, list, year_list, committee_list, loop_type, loop_index, f2
 #
 
 
-version = "3.0"
+version = "3.1"
 print(" ")
-print("Running main.py – Version", version)
-print(" ")
-
+print("<------------------Running main.py – Version", version, "------------------>")
 committees = ["City Council", "Rules & Legislation", "Public Works", "Life Enrichment", "Public Safety",
-              "Oakland Redevelopment", "Community & Economic Development" , "Finance and Management"]
+              "Oakland Redevelopment", "Community & Economic Development" , "Finance & Management"]
 years = ["2018", "2017", "2016", "2015", "2014"]
 
 for index_year, year in enumerate(years):
@@ -183,6 +191,7 @@ for index_year, year in enumerate(years):
         f1.write(" ")
 
         f1.close()  # Close the file
-        print("End of main.py")
+
+print("<-----------------End of main.py--------------------–––––––––––>")
 
 quit()

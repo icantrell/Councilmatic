@@ -31,7 +31,7 @@ def read_csv_file(datafile, elements):
 def write_day_header(f2, day1, day2):
     f2.write('<div class="calendar_plan">' + "\n")
     f2.write('<div class="cl_plan">' + "\n")
-    f2.write('<div class="cl_title"> <font size="+1">' + day1 + '</font> </div>' + "\n")
+    f2.write('<div class="cl_title"> <font size="+3">' + day1 + '</font> </div>' + "\n")
     f2.write('<div class="cl_copy">' + day2 + '</div>' "\n")
     f2.write('</div>' + "\n")
     f2.write('</div>' + "\n")
@@ -49,12 +49,11 @@ def write_event_header(f2, time_event, link_calendar, name_committee, name_locat
     f2.write(' ' + "\n")
 
 
-version = "2.0"
+version = "2.1"
 lookAhead = 14  # Number of the days to look ahead for meetings
 
 print(" ")
-print("Running Software Version ", version, " - sidebar.py ")
-print(" ")
+print("<---------Running Software Version:", version, "- sidebar.py ----------->")
 
 outfile = "../website/html/dynamic_calendar.html"
 f1 = open(outfile, 'w+')
@@ -77,13 +76,12 @@ else:
 schedule = []
 for year in years:
     scraper_file = "../website/scraped/year" + str(year) + ".csv"
-    print(scraper_file)
+    print("Scraping", scraper_file)
 
     read_csv_file(scraper_file, schedule)
 
 
 numrows = len(schedule)
-
 today = datetime.now()
 lastdate = today - timedelta(days=1)
 tomorrow = today + timedelta(days=1)
@@ -121,6 +119,6 @@ for i in range(numrows-1, 0, -1):
     write_event_header(f1, schedule[i][3], schedule[i][2], committee, schedule[i][4])
 
 f1.close()  # Close the file
-print("End of sidebar.py")
-
+print("End of process - sidebar.py")
+print(" ")
 quit()
