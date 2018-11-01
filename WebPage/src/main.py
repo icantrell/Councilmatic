@@ -23,7 +23,7 @@ def read_csvfile(datafile, search_string, f2):
     citycouncil = search_string
     https = "https://"
     for i in range(numrows):
-        if len(data[i][:]) >= 8:
+        if len(data[i][:]) >= 9:
             meeting = data[i][0]
             if citycouncil in meeting:
                 meeting_video = data[i][8]
@@ -31,16 +31,17 @@ def read_csvfile(datafile, search_string, f2):
                 meeting_time = data[i][3]
                 meeting_agenda = data[i][6]
                 meeting_minutes = data[i][7]
+                ecomment = data[i][9]
 
                 if https in meeting_video:
                     link = meeting_video
-                    link_text = "Click for Video Minutes and Annotated Agenda"
+                    link_text = "Click for Video Minutes and Agenda"
                 elif https in meeting_minutes:
                     link = meeting_minutes
                     link_text = "Click for Minutes"
                 elif https in meeting_agenda:
                     link = meeting_agenda
-                    link_text = "Agenda"
+                    link_text = "Click for Agenda"
                 else:
                     link = 'none'
                     link_text = 'none'
@@ -49,16 +50,19 @@ def read_csvfile(datafile, search_string, f2):
                 meeting_deadline = datetime.strptime(meeting_date, '%m/%d/%Y') + timedelta(days=1)
                 if present < meeting_deadline:
                     link_text = "Meeting at " + meeting_time + " in the " + data[i][4]
-                    write_http_row(f2, meeting_date, link, link_text)
+                    write_http_row(f2, meeting_date, link, link_text, ecomment)
                 elif present > datetime.strptime(meeting_date, '%m/%d/%Y') + timedelta(days=10):
                     # Checking  to see if 10 days have passed since meeting.  Only keep if have video minutes
-                    if link_text == "Click for Video Minutes and Annotated Agenda":
-                        write_http_row(f2, meeting_date, link, link_text)  # Need video minutes for this length of time
+                    if link_text == "Click for Video Minutes and Agenda":
+                        # Need video minutes for this length of time
+                        write_http_row(f2, meeting_date, link, link_text, "video")
                 else:
-                    write_http_row(f2, meeting_date, link, link_text)  # print out meeting details in prelimary time
+                    # print out meeting details in preliminary time
+                    write_http_row(f2, meeting_date, link, link_text, "video")
 
 
-def write_http_row(f2, date, link, message):
+def write_http_row(f2, date, link, message, emessage):
+    https = "https://"
     f2.write("\n")
 
     lineout = "<tr>"
@@ -68,9 +72,19 @@ def write_http_row(f2, date, link, message):
     f2.write(lineout + "\n")
 
     if link == "none":
-        lineout = '<td>' + message + '</a></td>'    #if no link omit it
+        lineout = '<td>' + message  # if no link omit it
+    elif emessage == "video":
+        lineout = '<td> <a href="' + link + '" target=\n_top">' + message
     else:
-        lineout = '<td><a href="' + link + '" target=\n_top">' + message + '</a></td>'
+        print("emessage",emessage)
+        lineout = '<td>' + message + " | "'<a href="' + link + '" target=\n_top">' + "Click for agenda"
+
+    if https in emessage:       # to add e-comment
+        lineout = lineout + " | " '<a href="' + emessage + '" target=\n_top">' + "Click to comment electronically"
+
+    f2.write(lineout + "\n")
+
+    lineout = '</a></td>'
     f2.write(lineout + "\n")
 
     lineout = "</tr>"
