@@ -1,6 +1,6 @@
-<! >
-<!Begin template_table_top.txt>
-<! Table>
+<!-- -->
+<!--Begin template_table_top.txt-->
+<!--Table-->
  <table class="table table-striped">
         <thead class="thead-dark">
         <tr>
@@ -9,4 +9,4 @@
         </tr>
         </thead>
         <tbody>
-  <!End template_table_top.txt>
+  <!--End template_table_top.txt-->

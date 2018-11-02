@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!Begin template_top.txt>
+<!--Begin template_top.txt-->
        <html lang="en">
          <head>
            <meta http-equiv="content-type" content="text/html; charset=utf-8">
@@ -45,5 +45,5 @@
                          width="450">
                      </div>
                   <div class="container">
-<!End template_top.txt>
-<! >
+<!--End template_top.txt-->
+<!-- -->

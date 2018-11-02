@@ -1,5 +1,5 @@
-           <! >
-            <!/Begin template_table_bottom.txt>
+           <!-- -->
+            <!--Begin template_table_bottom.txt-->
         </tbody>
     </table>
-               <!/End template_table_bottom.txt>
+               <!--End template_table_bottom.txt-->

@@ -1,5 +1,5 @@
- <! >
- <!Begin Template_bottom.txt>
+ <!-- -->
+ <!--Begin Template_bottom.txt-->
               <h6 style="   text-align: center;" align="center">Created by <a href="http://www.openoakland.org">Open
                   Oakland</a></h6>
             </div>
@@ -11,4 +11,4 @@
     </p>
   </body>
 </html>
-<!End Template_bottom.txt>
+<!--End Template_bottom.txt-->

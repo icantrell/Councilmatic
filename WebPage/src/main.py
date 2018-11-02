@@ -85,16 +85,16 @@ def write_http_row(f2, date, link, message, emessage):
     if link == "none":
         lineout = '<td>' + message  # if no link omit it
     elif emessage == "video":
-        lineout = '<td> <a href="' + link + '" target=\n_top">' + message
+        lineout = '<td> <a href="' + link + '" target=\n_top">' + message + "</a>"
     else:
-        lineout = '<td>' + message + " | "'<a href="' + link + '" target=\n_top">' + "Click for agenda"
+        lineout = '<td>' + message + " | "'<a href="' + link + '" target=\n_top">' + "Click for agenda</a>"
 
     if https in emessage:       # to add e-comment
-        lineout = lineout + " | " '<a href="' + emessage + '" target=\n_top">' + "Click to comment electronically"
+        lineout = lineout + " | " '<a href="' + emessage + '" target=\n_top">' + "Click to comment electronically</a>"
 
     f2.write(lineout + "\n")
 
-    lineout = '</a></td>'
+    lineout = '</td>'
     f2.write(lineout + "\n")
 
     lineout = "</tr>"
@@ -123,15 +123,15 @@ def make_navbar(type, list, year_list, committee_list, loop_type, loop_index, f2
             year_bar = str(year_list[index])           # Looping over the years so fixed committee
             committee_bar = str(loop_index)
 
-        urlnavbar = '../' + year_bar + '/committee' + committee_bar + ".html" #looping over years
-        linenav = '<a class="nav-link" href="' + urlnavbar + ' "href=#">' + item + '</a>'   #Problem may be here
+        urlnavbar = '../' + year_bar + '/committee' + committee_bar + ".html"  # looping over years
+        linenav = '<a class="nav-link" target="_self" href="' + urlnavbar + ' ">' + item + '</a>'   # Problem may be here
         f2.write(linenav + "\n")
 
         f2.write("    </li>" + "\n")
 
     url = "template_navbar_bottom.txt"
     create_html(url, f2)  # Create  template for HTML page
-    f2.write(" ")
+    f2.write(" " + "\n")
 
 #
 # Main program
@@ -154,7 +154,7 @@ for index_year, year in enumerate(years):
         #   write the top of the web page
         url = "template_top.txt"
         create_html(url, f1)  # Create  template for HTML page
-        f1.write(" ")
+        f1.write(" " + "\n")
 
         loop_committee = True # Loop over committees
         loop_index = index_year  # Fix the year
@@ -163,14 +163,14 @@ for index_year, year in enumerate(years):
         #  write the top of the web page
         url = "template_above_table.txt"
         create_html(url, f1)  # Create  template for HTML page
-        f1.write(" ")
+        f1.write(" " + "\n")
 
-        line = '<div align="center"><p><h3>' + committee + " - " + year + '</h3></p></div>'
+        line = '<div align="center"><h3>' + committee + " - " + year + '</h3></div>'
         f1.write(line)
 
         url = "template_table_top.txt"
         create_html(url, f1)  # Write bottom of header file
-        f1.write(" ")
+        f1.write(" " + "\n")
 
         scraper_file = "../website/scraped/year" + str(year) + ".csv"
         read_csvfile(scraper_file, committees[index], f1)
@@ -178,7 +178,7 @@ for index_year, year in enumerate(years):
         # write the bottom of the table
         url = "template_table_bottom.txt"
         create_html(url, f1)  # Create  template for HTML page
-        f1.write(" ")
+        f1.write(" " + "\n")
 
         # create the lower navigation bar
         loop_committee = False  # Loop over years
@@ -188,7 +188,7 @@ for index_year, year in enumerate(years):
         # write the bottom of the web page
         url = "template_bottom.txt"
         create_html(url, f1)  # Create  template for HTML page
-        f1.write(" ")
+        f1.write(" " + "\n")
 
         f1.close()  # Close the file
 
