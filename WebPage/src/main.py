@@ -6,7 +6,7 @@
 
 import csv
 from datetime import datetime, timedelta
-
+import shutil
 
 def dateLessThanEqual(date1, date2):  # Compare whether deadline has passed
     datetime1 = datetime.strptime(date1, '%m/%d/%Y')
@@ -138,11 +138,11 @@ def make_navbar(type, list, year_list, committee_list, loop_type, loop_index, f2
 #
 
 
-version = "3.1"
+version = "3.2"
 print(" ")
-print("<------------------Running main.py – Version", version, "------------------>")
+print("<------------------Running main.py - Version", version, "------------------>")
 committees = ["City Council", "Rules & Legislation", "Public Works", "Life Enrichment", "Public Safety",
-              "Oakland Redevelopment", "Community & Economic Development" , "Finance & Management"]
+              "Oakland Redevelopment", "Community & Economic Development", "Finance & Management"]
 years = ["2018", "2017", "2016", "2015", "2014"]
 
 for index_year, year in enumerate(years):
@@ -189,9 +189,11 @@ for index_year, year in enumerate(years):
         url = "template_bottom.txt"
         create_html(url, f1)  # Create  template for HTML page
         f1.write(" " + "\n")
-
         f1.close()  # Close the file
+        if index == 0:
+            indexfile = "../website/" + year + "/index.html"
+            shutil.copyfile(outfile, indexfile)
 
-print("<-----------------End of main.py--------------------–––––––––––>")
+print("<-----------------End of main.py------------------------------->")
 
 quit()

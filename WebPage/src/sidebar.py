@@ -119,6 +119,6 @@ for i in range(numrows-1, 0, -1):
     write_event_header(f1, schedule[i][3], schedule[i][2], committee, schedule[i][4])
 
 f1.close()  # Close the file
-print("End of process - sidebar.py")
+print("<----------------End of process - sidebar.py----------------->")
 print(" ")
 quit()
