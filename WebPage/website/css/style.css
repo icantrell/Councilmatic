@@ -125,3 +125,5 @@ body {
 .dark .header_title, .dark .ei_Title, .dark .ce_title {
   color: #fff;
 }
+
+div.content { width: 313px }

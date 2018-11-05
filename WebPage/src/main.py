@@ -70,7 +70,11 @@ def read_csvfile(datafile, search_string, f2):
                 else:
                     # print out meeting details in preliminary time
                     write_http_row(f2, meeting_date, link, link_text, "video")
-
+        else:
+            print("***Error** on line", i)   # Error condition
+            if len(data[i][:]) > 0:
+                print(data[i][0])
+                print(' ')
 
 def write_http_row(f2, date, link, message, emessage):
     https = "https://"
