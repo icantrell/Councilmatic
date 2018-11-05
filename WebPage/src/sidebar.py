@@ -18,11 +18,13 @@ def read_csv_file(datafile, elements):
     for i in range(numrows):  # Find out which meetings have not occurred
         if i > 0:  # Don't read headers
             if len(data[i][:]) >= 8:
-                meeting_date = data[i][1]
-                future_meeting = meeting_date >= today
+                meeting_daytime = datetime.strptime(data[i][1], '%m/%d/%Y')  # Convert to daytime format to compare
+                meeting_day = meeting_daytime.strftime('%m/%d/%Y')
+                future_meeting = meeting_day >= today
                 if not future_meeting:
                     break
                 elements.append([])
+                print(meeting_day)
                 for j in range(0, 10):
                     elements[i - 1].append(0)
                     elements[i - 1][j] = data[i][j]
@@ -36,31 +38,38 @@ def write_day_header(f2, day1, day2):
     f2.write('</div>' + "\n")
     f2.write('</div>' + "\n")
 
+#
+# write out an icon with link and tooltip
+#
+
+
+def write_image_link(f2, alt_value, image_loc, html_link, tool_tip):
+    f2.write('<a href="' + html_link + '" data-toggle="tooltip" title="' + tool_tip+ '">' + "\n")
+    f2.write('<img border="0" alt="' + alt_value + '" src="' + image_loc + '" width="15" height="15">'
+             + "</a>" + "\n")
+
 
 def write_event_header(f2, time_event, link_calendar, name_committee, name_location, link_agenda, link_ecoomment):
-
     f2.write('<div class="event_item">' + "\n")
     f2.write('<div class="ei_Dot"></div>' + "\n")
     f2.write('<div class="ei_Title">' + time_event + "\n")
-    f2.write('<a href="' + link_calendar + '">' + "\n")
-    f2.write('<img border="0" alt="calendar" src="../images/ical.gif" width="15" height="15">'
-             + "</a>" + "\n")
+
+    write_image_link(f2, "calendar", "../images/ical.gif", link_calendar, "Add to Calendar")
+
     if "https" in link_agenda:
-        f2.write('<a href="' + link_agenda + '">' + "\n")
-        f2.write(
-            '<img border="0" alt="agenda link" src="../images/download.jpg" width="15" height="15">' + "</a>" + "\n")
+        write_image_link(f2, "agenda", "../images/download.jpg", link_agenda, "Agenda")
+
     if "https" in link_ecoomment:
-        f2.write('<a href="' + link_ecoomment + '">' + "\n")
-        f2.write('<img border="0" alt="comment link" src="../images/comment.jpeg" width="15" height="15"> </a>'
-                 + "\n")
-        f2.write("</div>" + "\n")
+        write_image_link(f2, "Comment Online", "../images/comment.jpeg", link_ecoomment, "Comment Online")
+
+    f2.write("</div>" + "\n")
     f2.write('<div class="ei_Copy"> <font size="+1">' + name_committee + '</font> <br/> ' + name_location + "\n")
     f2.write('</div>' + "\n")
     f2.write('</div>' + "\n")
     f2.write(' ' + "\n")
 
 
-version = "2.2"
+version = "2.3"
 lookAhead = 14  # Number of the days to look ahead for meetings
 
 print(" ")
@@ -87,7 +96,6 @@ schedule = []
 for year in years:
     scraper_file = "../website/scraped/year" + str(year) + ".csv"
     print("Scraping", scraper_file)
-
     read_csv_file(scraper_file, schedule)
 
 numrows = len(schedule)
@@ -98,6 +106,7 @@ today_day = str(today.month) + '/' + str(today.day) + '/' + str(today.year)
 tomorrow_day = str(tomorrow.month) + '/' + str(tomorrow.day) + '/' + str(tomorrow.year)
 for i in range(numrows - 1, 0, -1):
     event_day = schedule[i][1]
+
     if lastdate != event_day:
         lastdate = event_day
         new_day = True

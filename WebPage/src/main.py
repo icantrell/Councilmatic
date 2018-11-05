@@ -8,6 +8,8 @@ import csv
 from datetime import datetime, timedelta
 import shutil
 
+
+
 def dateLessThanEqual(date1, date2):  # Compare whether deadline has passed
     datetime1 = datetime.strptime(date1, '%m/%d/%Y')
     datetime2 = datetime.strptime(date2, '%m/%d/%Y')
@@ -89,7 +91,8 @@ def write_http_row(f2, date, link, message, emessage):
     if link == "none":
         lineout = '<td>' + message  # if no link omit it
     elif emessage == "video":
-        lineout = '<td> <a href="' + link + '" target=\n_top">' + message + "</a>"
+        lineout = '<td> <a href="' + link + '" target=\n_top data-toggle="tooltip" title="Open in new page">' \
+                  + message + "</a>"
     else:
         lineout = '<td>' + message + " | "'<a href="' + link + '" target=\n_top">' + "Click for agenda</a>"
 
@@ -112,8 +115,10 @@ def make_navbar(type, list, year_list, committee_list, loop_type, loop_index, f2
     #   write the top of navbar
     if type ==1:
         url = "template_navbar_top.txt"
+        tooltip = "Select committee of interest"
     else:
         url = "template_navbar_top2.txt"
+        tooltip = "Select year of interest"
     create_html(url, f2)  # Create  template for HTML page
     #
     for index, item in enumerate(list):
@@ -128,7 +133,8 @@ def make_navbar(type, list, year_list, committee_list, loop_type, loop_index, f2
             committee_bar = str(loop_index)
 
         urlnavbar = '../' + year_bar + '/committee' + committee_bar + ".html"  # looping over years
-        linenav = '<a class="nav-link" target="_self" href="' + urlnavbar + ' ">' + item + '</a>'   # Problem may be here
+        linenav = '<a class="nav-link" target="_self" href="' + urlnavbar + '" data-toggle="tooltip" title="' \
+            + tooltip + '">' + item + '</a>'  # Problem may be here
         f2.write(linenav + "\n")
 
         f2.write("    </li>" + "\n")
