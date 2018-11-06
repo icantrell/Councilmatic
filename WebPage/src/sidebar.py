@@ -24,7 +24,6 @@ def read_csv_file(datafile, elements):
                 if not future_meeting:
                     break
                 elements.append([])
-                print(meeting_day)
                 for j in range(0, 10):
                     elements[i - 1].append(0)
                     elements[i - 1][j] = data[i][j]
