@@ -44,7 +44,7 @@ def write_day_header(f2, day1, day2):
 
 def write_image_link(f2, alt_value, image_loc, html_link, tool_tip):
     f2.write('<a href="' + html_link + '" data-toggle="tooltip" title="' + tool_tip+ '">' + "\n")
-    f2.write('<img border="0" alt="' + alt_value + '" src="' + image_loc + '" width="15" height="15">'
+    f2.write('<border: 0;} alt="' + alt_value + '" src="' + image_loc + '" width="15" height="15">'
              + "</a>" + "\n")
 
 

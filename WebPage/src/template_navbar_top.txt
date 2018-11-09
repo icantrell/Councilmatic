@@ -1,4 +1,4 @@
-<!-- -->
+<!--   -->
 <!--Begin template_navbar_top.txt-->
    <div align="center"><i>Select the City Council or its subcommittees for current and future meetings</i></div>
 <! Navigation bar>
