@@ -7,21 +7,13 @@
 import csv
 from datetime import datetime, timedelta
 import shutil
-
+from create_html import create_html
 
 
 def dateLessThanEqual(date1, date2):  # Compare whether deadline has passed
     datetime1 = datetime.strptime(date1, '%m/%d/%Y')
     datetime2 = datetime.strptime(date2, '%m/%d/%Y')
     return datetime1 <= datetime2
-
-
-def create_html(url_open, fx):  # Read a template file and then write it main file
-    in_file = open(url_open, 'r')
-    page = in_file.read()
-    fx.write(page)
-    in_file.close()
-    return
 
 
 def read_csvfile(datafile, search_string, f2):
@@ -114,10 +106,10 @@ def write_http_row(f2, date, link, message, emessage):
 def make_navbar(type, list, year_list, committee_list, loop_type, loop_index, f2):
     #   write the top of navbar
     if type ==1:
-        url = "template_navbar_top.txt"
+        url = "template/template_navbar_top.txt"
         tooltip = "Select committee of interest"
     else:
-        url = "template_navbar_top2.txt"
+        url = "template/template_navbar_top2.txt"
         tooltip = "Select year of interest"
     create_html(url, f2)  # Create  template for HTML page
     #
@@ -139,7 +131,7 @@ def make_navbar(type, list, year_list, committee_list, loop_type, loop_index, f2
 
         f2.write("    </li>" + "\n")
 
-    url = "template_navbar_bottom.txt"
+    url = "template/template_navbar_bottom.txt"
     create_html(url, f2)  # Create  template for HTML page
     f2.write(" " + "\n")
 
@@ -161,24 +153,39 @@ for index_year, year in enumerate(years):
         outfile = "../website/" + year + "/committee" + str(index) + ".html"
         f1 = open(outfile, 'w+')
         #
-        #   write the top of the web page
-        url = "template_top.txt"
+        #   write style section of the web page
+        url = "template/template_style.txt"
         create_html(url, f1)  # Create  template for HTML page
         f1.write(" " + "\n")
-
+        #
+        #   write the top section of the web page
+        url = "template/template_top1.txt"
+        create_html(url, f1)  # Create  template for HTML page
+        f1.write(" " + "\n")
+        #
+        #   write the first top of the web page
+        url = "../website/html/dynamic_calendar.html"
+        create_html(url, f1)  # Create  template for HTML page
+        f1.write(" " + "\n")
+        #
+        #   write the second top of the web page
+        url = "template/template_top2.txt"
+        create_html(url, f1)  # Create  template for HTML page
+        f1.write(" " + "\n")
+        #
         loop_committee = True # Loop over committees
         loop_index = index_year  # Fix the year
         make_navbar(1, committees, years, committees, loop_committee, loop_index, f1)
 
         #  write the top of the web page
-        url = "template_above_table.txt"
+        url = "template/template_above_table.txt"
         create_html(url, f1)  # Create  template for HTML page
         f1.write(" " + "\n")
 
         line = '<div align="center"><h3>' + committee + " - " + year + '</h3></div>'
         f1.write(line)
 
-        url = "template_table_top.txt"
+        url = "template/template_table_top.txt"
         create_html(url, f1)  # Write bottom of header file
         f1.write(" " + "\n")
 
@@ -186,7 +193,7 @@ for index_year, year in enumerate(years):
         read_csvfile(scraper_file, committees[index], f1)
 
         # write the bottom of the table
-        url = "template_table_bottom.txt"
+        url = "template/template_table_bottom.txt"
         create_html(url, f1)  # Create  template for HTML page
         f1.write(" " + "\n")
 
@@ -196,7 +203,7 @@ for index_year, year in enumerate(years):
         make_navbar(2, years, years, committees, loop_committee, loop_index, f1)
 
         # write the bottom of the web page
-        url = "template_bottom.txt"
+        url = "template/template_bottom.txt"
         create_html(url, f1)  # Create  template for HTML page
         f1.write(" " + "\n")
         f1.close()  # Close the file

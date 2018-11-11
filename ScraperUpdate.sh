@@ -70,8 +70,8 @@ cd Webpage
 cd src
 echo " "
 echo "Running Web Programs"
-$PYTHON  main.py  #Run the main program
 $PYTHON  sidebar.py  #Get the sidebar
+$PYTHON  main.py  #Run the main program
 echo " "
 date
 echo "ScraperUpdate.sh completed"

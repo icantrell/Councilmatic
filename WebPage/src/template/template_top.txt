@@ -35,8 +35,14 @@
                          Council Calendar</h1>
                        <p class="header_copy">Click icons for more info</p>
                      </div>
+
+
                      <div id="headerDiv"></div>
                      <!--Bring in Calendar Include file--> </div>
+
+
+
+
                  </td>
                  <td style="margin-left: -56px; width: 1453px;"><br>
                                <div align="center"><img src="../images/City-of-Oakland-Logo-GREEN.png"

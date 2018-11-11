@@ -7,6 +7,7 @@
 import csv
 from datetime import datetime, timedelta
 import calendar
+from create_html import create_html
 
 
 def read_csv_file(datafile, elements):
@@ -44,7 +45,7 @@ def write_day_header(f2, day1, day2):
 
 def write_image_link(f2, alt_value, image_loc, html_link, tool_tip):
     f2.write('<a href="' + html_link + '" data-toggle="tooltip" title="' + tool_tip+ '">' + "\n")
-    f2.write('<border: 0;} alt="' + alt_value + '" src="' + image_loc + '" width="15" height="15">'
+    f2.write('<img border: 0;} alt="' + alt_value + '" src="' + image_loc + '" width="15" height="15">'
              + "</a>" + "\n")
 
 
@@ -68,7 +69,7 @@ def write_event_header(f2, time_event, link_calendar, name_committee, name_locat
     f2.write(' ' + "\n")
 
 
-version = "2.3"
+version = "3.0"
 lookAhead = 14  # Number of the days to look ahead for meetings
 
 print(" ")
@@ -76,6 +77,12 @@ print("<---------Running Software Version:", version, "- sidebar.py ----------->
 
 outfile = "../website/html/dynamic_calendar.html"
 f1 = open(outfile, 'w+')
+
+#
+#   write the top section of the column
+url = "template/template_sidebar.txt"
+create_html(url, f1)  # Create  template for HTML page
+f1.write(" " + "\n")
 
 currentDay = datetime.now().day
 currentMonth = datetime.now().month
