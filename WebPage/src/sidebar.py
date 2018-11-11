@@ -145,6 +145,29 @@ for i in range(numrows - 1, 0, -1):
     write_event_header(f1, schedule[i][3], schedule[i][2], committee, schedule[i][4], agenda, ecomment)
 
 f1.close()  # Close the file
+
+# Now make the HTML Code
+
+outfile = "../website/mobile/index.html"
+f2 = open(outfile, 'w+')
+
+#   write style section of the web page
+url = "template/template_style.txt"
+create_html(url, f2)  # Create  template for HTML page
+f2.write(" " + "\n")
+#
+#   write the sidebar
+url = "../website/html/dynamic_calendar.html"
+create_html(url, f2)  # Create  template for HTML page
+f2.write(" " + "\n")
+#
+#   write closing section
+url = "template/template_sidebar_bottom.txt"
+create_html(url, f2)  # end of HTML page
+f2.write(" " + "\n")
+#
+f2.close()  # Close the file
+
 print("<----------------End of process - sidebar.py----------------->")
 print(" ")
 quit()
