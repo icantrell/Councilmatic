@@ -144,6 +144,12 @@ for i in range(numrows - 1, 0, -1):
     ecomment = schedule[i][9]
     write_event_header(f1, schedule[i][3], schedule[i][2], committee, schedule[i][4], agenda, ecomment)
 
+#
+#   write closing section
+url = "template/template_sidebar_bottom.txt"
+create_html(url, f1)  # Finish the sidebar
+f1.write(" " + "\n")
+
 f1.close()  # Close the file
 
 # Now make the HTML Code
@@ -158,11 +164,11 @@ f2.write(" " + "\n")
 #
 #   write the sidebar
 url = dynamic
-create_html(url, f2)  # Create  template for HTML page
+create_html(url, f2)  # Create  body of HTML page
 f2.write(" " + "\n")
 #
-#   write closing section
-url = "template/template_sidebar_bottom.txt"
+#   write end of webpage
+url = "template/template_sidebar_end.txt"
 create_html(url, f2)  # end of HTML page
 f2.write(" " + "\n")
 #

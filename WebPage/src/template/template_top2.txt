@@ -1,7 +1,6 @@
 
 <!--Begin template_top2.txt-->
-                  </div>  <!-- not sure if needed-->
-                 </td>
+            </td>
                  <td style="margin-left: -56px; width: 1453px;"><br>
                                <div align="center"><img src="../images/City-of-Oakland-Logo-GREEN.png"
                          alt="logo"
