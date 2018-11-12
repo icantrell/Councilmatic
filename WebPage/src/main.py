@@ -164,7 +164,7 @@ for index_year, year in enumerate(years):
         f1.write(" " + "\n")
         #
         #   write the sidebar
-        url = "../website/html/dynamic_calendar.html"
+        url = "temp/dynamic_calendar.txt"
         create_html(url, f1)  # Create  template for HTML page
         f1.write(" " + "\n")
         #

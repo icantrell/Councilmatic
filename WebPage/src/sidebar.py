@@ -1,4 +1,4 @@
-# This program creates a sidebar for Councilmatis
+# This program creates a sidebar for Councilmatic
 # Create by Howard Matis for OpenOakland - October 23, 2018
 #
 # Takes data scraped from Oakland Legistar web page - https://oakland.legistar.com/Calendar.aspx
@@ -45,14 +45,14 @@ def write_day_header(f2, day1, day2):
 
 def write_image_link(f2, alt_value, image_loc, html_link, tool_tip):
     f2.write('<a href="' + html_link + '" data-toggle="tooltip" title="' + tool_tip+ '">' + "\n")
-    f2.write('<img border: 0;} alt="' + alt_value + '" src="' + image_loc + '" width="32" height="32">'
-             + "</a>" + "\n")
+    f2.write('<img alt="' + alt_value + '" src="' + image_loc + '" width="32" height="32">'
+             + "</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + "\n")
 
 
 def write_event_header(f2, time_event, link_calendar, name_committee, name_location, link_agenda, link_ecoomment):
     f2.write('<div class="event_item">' + "\n")
     f2.write('<div class="ei_Dot"></div>' + "\n")
-    f2.write('<div class="ei_Title">' + time_event + "\n")
+    f2.write('<div class="ei_Title">' + time_event + "&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;" + "\n")
 
     write_image_link(f2, "calendar", "../images/iCal-icon-32.png", link_calendar, "Add to Calendar")
 
@@ -70,13 +70,13 @@ def write_event_header(f2, time_event, link_calendar, name_committee, name_locat
 
 
 version = "3.0"
-lookAhead = 14  # Number of the days to look ahead for meetings
+lookAhead = 21  # Number of the days to look ahead for meetings
 
 print(" ")
 print("<---------Running Software Version:", version, "- sidebar.py ----------->")
 
-outfile = "../website/html/dynamic_calendar.html"
-f1 = open(outfile, 'w+')
+dynamic = "temp/dynamic_calendar.txt"
+f1 = open(dynamic, 'w+')
 
 #
 #   write the top section of the column
@@ -157,7 +157,7 @@ create_html(url, f2)  # Create  template for HTML page
 f2.write(" " + "\n")
 #
 #   write the sidebar
-url = "../website/html/dynamic_calendar.html"
+url = dynamic
 create_html(url, f2)  # Create  template for HTML page
 f2.write(" " + "\n")
 #

@@ -2,12 +2,12 @@
  <!--Begin Template_bottom.txt-->
               <h6 style="   text-align: center;" align="center">Created by <a href="http://www.openoakland.org">Open
                   Oakland</a></h6>
-            </div>
+            <!--</div>-->
           </td>
         </tr>
       </tbody>
     </table>
-    <p><br>
+    <p>
     </p>
   </body>
 </html>
