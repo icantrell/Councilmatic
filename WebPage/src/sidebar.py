@@ -45,7 +45,7 @@ def write_day_header(f2, day1, day2):
 
 def write_image_link(f2, alt_value, image_loc, html_link, tool_tip):
     f2.write('<a href="' + html_link + '" data-toggle="tooltip" title="' + tool_tip+ '">' + "\n")
-    f2.write('<img border: 0;} alt="' + alt_value + '" src="' + image_loc + '" width="15" height="15">'
+    f2.write('<img border: 0;} alt="' + alt_value + '" src="' + image_loc + '" width="32" height="32">'
              + "</a>" + "\n")
 
 
@@ -54,13 +54,13 @@ def write_event_header(f2, time_event, link_calendar, name_committee, name_locat
     f2.write('<div class="ei_Dot"></div>' + "\n")
     f2.write('<div class="ei_Title">' + time_event + "\n")
 
-    write_image_link(f2, "calendar", "../images/ical.gif", link_calendar, "Add to Calendar")
+    write_image_link(f2, "calendar", "../images/iCal-icon-32.png", link_calendar, "Add to Calendar")
 
     if "https" in link_agenda:
-        write_image_link(f2, "agenda", "../images/download.jpg", link_agenda, "Agenda")
+        write_image_link(f2, "agenda", "../images/agenda-32.png", link_agenda, "Agenda")
 
     if "https" in link_ecoomment:
-        write_image_link(f2, "Comment Online", "../images/comment.jpeg", link_ecoomment, "Comment Online")
+        write_image_link(f2, "Comment Online", "../images/comment-32.png", link_ecoomment, "Comment Online")
 
     f2.write("</div>" + "\n")
     f2.write('<div class="ei_Copy"> <font size="+1">' + name_committee + '</font> <br/> ' + name_location + "\n")

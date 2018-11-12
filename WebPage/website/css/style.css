@@ -7,7 +7,7 @@ body {
 }
 
 .container {
-  margin: 100px auto;
+  margin: 0px;
   width: 809px;
 }
 
@@ -15,8 +15,11 @@ body {
   background-color: #fff;
 }
 
+/* was 65px for margin-left */
 .dark {
-  margin-left: 65px;
+  margin-left: 23px;
+  marg
+
 }
 
 .calendar {
