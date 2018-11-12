@@ -1,7 +1,7 @@
  <!-- -->
  <!--Begin template_sidebar_bottom.txt-->
               <!--bottom text of sidebar-->
-              <hr style="height: 0px; color: white; margin-left: auto; margin-right: auto;">
+              <hr class="light" style="height: 0px; margin-left: auto; margin-right: auto;">
               <div style="text-align: center;">Created by <a href="http://www.openoakland.org">Open
                     Oakland</a><br> Disclaimer
                 <!--end of bottom text of sidebar-->
