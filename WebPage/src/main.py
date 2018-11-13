@@ -140,7 +140,7 @@ def make_navbar(type, list, year_list, committee_list, loop_type, loop_index, f2
 #
 
 
-version = "3.2"
+version = "3.5"
 print(" ")
 print("<------------------Running main.py - Version", version, "------------------>")
 committees = ["City Council", "Rules & Legislation", "Public Works", "Life Enrichment", "Public Safety",
@@ -163,7 +163,9 @@ for index_year, year in enumerate(years):
         create_html(url, f1)  # Create  template for HTML page
         f1.write(" " + "\n")
         #
+        f1.write("<tbody> " + "\n")  # Needed when use columns for full webpage
         #   write the sidebar
+        #
         url = "temp/dynamic_calendar.txt"
         create_html(url, f1)  # Create  template for HTML page
         f1.write(" " + "\n")

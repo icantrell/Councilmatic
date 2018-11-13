@@ -1,6 +1,5 @@
 <!--Begin template_sidebar.txt-->
-             <tbody>
-               <tr>
+                <tr>
                  <td style="width: 388px;"><br>
                    <div class="calendar dark">
 
