@@ -22,6 +22,15 @@
            	$("#headerDiv").load("../html/dynamic_calendar.html");
            });
            </script>
+         <link rel=​"icon" href=​"http:​/​/​www.openoakland.org/​wp-content/​uploads/​2015/​11/​cropped-logo_240x240-32x32.png" sizes=​"32x32">​
+         <link rel=​"icon" href=​"http:​/​/​www.openoakland.org/​wp-content/​uploads/​2015/​11/​cropped-logo_240x240-192x192.png" sizes=​"192x192">​
+         <link rel=​"apple-touch-icon-precomposed" href=​"http:​/​/​www.openoakland.org/​wp-content/​uploads/​2015/​11/​cropped-logo_240x240-180x180.png">​
+         <style>
+                a:link { color: green}              /* unvisited link */
+                a:hover { color: #006400;}          /* mouse over link darkdreen */
+                a:active {color: #90681B;}          /* selected link golden brown */
+                a:visited {color: #8b4513;}         /* visited link SaddleBrown */
+          </style>
          </head>
           <body>
          <!--End template_style.txt-->

@@ -1,7 +1,6 @@
  <!-- -->
  <!--Begin template_sidebar_end.txt-->
  <!--Used only for webpages with sidebar only-->
-     </tr>
     <p><br>
     </p>
   </body>

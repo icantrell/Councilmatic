@@ -166,6 +166,11 @@ for index_year, year in enumerate(years):
         f1.write("<tbody> " + "\n")  # Needed when use columns for full webpage
         #   write the sidebar
         #
+        f1.write("<tr>" + "\n")  # Needed when use columns for full webpage
+        #
+        f1.write('<td style="width: 388px;">' + "\n")  # Needed when use columns for full webpage
+        #
+        #   write the sidebar
         url = "temp/dynamic_calendar.txt"
         create_html(url, f1)  # Create  template for HTML page
         f1.write(" " + "\n")

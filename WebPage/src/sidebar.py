@@ -69,7 +69,7 @@ def write_event_header(f2, time_event, link_calendar, name_committee, name_locat
     f2.write(' ' + "\n")
 
 
-version = "3.0"
+version = "4.0"
 lookAhead = 21  # Number of the days to look ahead for meetings
 
 print(" ")

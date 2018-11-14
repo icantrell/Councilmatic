@@ -1,12 +1,13 @@
  <!-- -->
  <!--Begin template_sidebar_bottom.txt-->
-              <!--bottom text of sidebar-->
-              <hr class="light" style="height: 0px; margin-left: auto; margin-right: auto;">
-              <div style="text-align: center;">Created by <a href="http://www.openoakland.org">Open
-                    Oakland</a>
-                       <br> Disclaimer</div>
-             <div style="text-align: center;"><img src="../images/OpenOakland-32.png"
-                  alt="Open Oakland"></div>
-            </div>
-
+      <hr class="light" style="height: 0px; margin-left: auto; margin-right: auto;">
+      <div style="text-align: center;">Created by <a href="http://www.openoakland.org"
+          style="background-color: #DDF0C7; color: green;">OpenOakland</a></div>
+     <div style="text-align: center;"><img src="../images/openoakland-32.jpg" alt="OpenOakland Logo"></div>
+      <div style="text-align: center;">Disclaimer</div>
+      <div style="text-align: center;">Sign up here to<a href="https://solar.oaklandnet.com/Speaker/form"
+          style="background-color: #DDF0C7; color: green;">
+           speak at a </a>council meeting <br>
+      </div>
+    </div>
 <!--End template_sidebar_bottom.txt-->
