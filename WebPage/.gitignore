@@ -1,10 +1,8 @@
 # Created by .ignore support plugin (hsz.mobi)
 .idea/dictionaries/
-/src/parking2018.csv
-/src/parking2018d.csv
-/website/mobile/index test3.html
-/website/mobile/index-old-v2.html
-/website/mobile/index-old.html
-/website/mobile/index_newer.html
-/website/mobile/index_new.html
-/website/mobile/index-v4.html
+/website/mobile/*
+/WebPage/website/2018/*
+/WebPage/website/2014/*
+/WebPage/website/2015/*
+/WebPage/website/2016/*
+/WebPage/website/2017/*
