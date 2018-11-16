@@ -5,7 +5,6 @@ geckodriver*
 __pycache__
 *.pyc
 .~*#
-
 /WebPage/website/logs/
 /.ipynb_checkpoints/
 /calendar.ipynb
@@ -18,3 +17,4 @@ __pycache__
 .idea/
 /WebPage/website/pc/*
 /WebPage/website/mobile/*
+!/WebPage/website/css/style.css
