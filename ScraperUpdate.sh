@@ -26,6 +26,7 @@ NEXTYEAR=`date -v+1y  +"%Y"`
 CURRENTMONTH=`date +"%m"`
 PYTHON=/Users/matis/anaconda3/bin/python     #Must specify correct version of Python
 VERSION="1.5"
+export MOZ_HEADLESS=1 #Needed to run Firefox Headless
 #
 # for GECKO
 PATH="/Users/matis/.drivers:${PATH}"   #This is system dependent

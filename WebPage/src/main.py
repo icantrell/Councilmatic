@@ -217,6 +217,10 @@ for index_year, year in enumerate(years):
         if index == 0:
             indexfile = "../website/" + year + "/index.html"
             shutil.copyfile(outfile, indexfile)
+            if index_year == 0:
+                indexfile = "../website/pc/index.html"
+                shutil.copyfile(outfile, indexfile)
+
 
 print("<-----------------End of main.py------------------------------->")
 
