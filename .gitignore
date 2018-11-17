@@ -18,3 +18,9 @@ __pycache__
 /WebPage/website/pc/*
 /WebPage/website/mobile/*
 !/WebPage/website/css/style.css
+WebPage/website/scraped/year2014.csv
+WebPage/website/scraped/year2015.csv
+WebPage/website/scraped/year2016.csv
+WebPage/website/scraped/year2017.csv
+WebPage/website/scraped/year2018.csv
+WebPage/website/scraped/year2019.csv
