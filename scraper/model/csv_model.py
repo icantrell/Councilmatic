@@ -30,5 +30,5 @@ class CSVModel(object):
     for elt in l:
       ret_str_list.append(elt.to_csv_str())
 
-    return "\n".join(ret_str_list)
+    return "\n".join(ret_str_list).encode('utf-8')
 
