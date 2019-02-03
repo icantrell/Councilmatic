@@ -7,6 +7,8 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver import Firefox
+from selenium.webdriver.firefox.options import Options
 
 import unittest, time, re
 from urllib.parse import urlsplit
@@ -22,7 +24,9 @@ class Scraper(ABC):
         self.wait_time = wait
         if driver is None:
             # default to firefox
-            self.driver = webdriver.Firefox()
+            opts = Options()
+            opts.log.level = "error"
+            self.driver = webdriver.Firefox(options=opts)
         else:
             self.driver = driver
         
